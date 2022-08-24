@@ -15,6 +15,7 @@ import {
   FormHelperText,
   FormErrorMessage,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 const Login = () => {
   const [show, setShow] = useState<boolean>(false);
@@ -77,7 +78,9 @@ const Login = () => {
             </Box>
             {/* Lupa Password */}
             <Flex justify="flex-end" mt="15px">
-              <Link color="primary">Lupa Password?</Link>
+              <NextLink href="/auth/forgot-password" passHref>
+                <Link color="primary">Lupa Password?</Link>
+              </NextLink>
             </Flex>
 
             <Button mt="40px" variant="primary" w="100%" type="submit">
@@ -88,9 +91,11 @@ const Login = () => {
         <Flex mt="20px">
           <Text color="#737373" fontSize="lg">
             Belum Punya Akun?
-            <Link color="primary" fontWeight="bold" ml="1">
-              Daftar
-            </Link>
+            <NextLink href="/auth/register" passHref>
+              <Link color="primary" fontWeight="bold" ml="1">
+                Daftar
+              </Link>
+            </NextLink>
           </Text>
         </Flex>
       </Flex>
