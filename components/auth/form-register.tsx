@@ -8,15 +8,31 @@ import {
     Heading,
     Text,
     Input,
-    Flex
+    Flex,
+    InputRightElement,
+    InputGroup,
+    Link,
+    Container,
+    Center
 } from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 const FormRegister = () => {
     
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [ulangiPassword, setUlangiPassword] = useState('')
+    
+    const [show, setShow] = useState<boolean>(false);
+    const [showUlangi, setShowUlangi] = useState<boolean>(false);
 
+    const handleShow = () => {
+        setShow(!show);
+    };
+    const handleShowUlangi = () => {
+        setShowUlangi(!showUlangi);
+    };
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value)
     }
@@ -25,6 +41,9 @@ const FormRegister = () => {
     }
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value)
+    }
+    const handleUlangiPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUlangiPassword(event.target.value)
     }
     return(
         <GridItem>
@@ -36,8 +55,8 @@ const FormRegister = () => {
                 alignItems='center'
                 px={{ base: 14, lg: 114 }}
             >
-                <Box>
-                <Box textAlign='center' mb={7}>
+                <Container >
+                    <Box textAlign='center' mb={7}>
                         <Heading as='h1' size='md' mt={2}>
                             Daftar
                         </Heading>
@@ -48,13 +67,14 @@ const FormRegister = () => {
                     </Flex>
                     <Input
                         type='text'
-                        name='name'
+                        py="13px"
+                        px="20px"
+                        borderRadius="12px"
+                        bg="white"
                         value={name}
                         onChange={(e) => handleNameChange(e)}
-                        bg='#fff'
                         placeholder='Masukkan Nama'
-                        size='sm'
-                        borderRadius={12}
+                        required
                     />
                     <Flex gap={1} mb={2}>
                         <Text fontSize='xs'>Email </Text>
@@ -62,42 +82,72 @@ const FormRegister = () => {
                     </Flex>
                     <Input
                         type='text'
-                        name='email'
+                        py="13px"
+                        px="20px"
+                        borderRadius="12px"
+                        bg="white"
+                        placeholder='Masukkan Email'
                         value={email}
                         onChange={(e) => handleEmailChange(e)}
-                        bg='#fff'
-                        placeholder='Masukkan Email'
-                        size='sm'
-                        borderRadius={12}
+                        required
                     />
                     <Flex gap={1} mb={2}>
                         <Text fontSize='xs'>Password </Text>
                         <Text fontSize='xs' color='red'> *</Text>
                     </Flex>
-                    <Input
-                        type='password'
-                        name='password'
+                    <InputGroup size="md">
+                        <Input
+                        type={show ? "text" : "password"}
+                        py="13px"
+                        px="20px"
+                        borderRadius="12px"
+                        bg="white"
                         value={password}
                         onChange={(e) => handlePasswordChange(e)}
-                        bg='#fff'
                         placeholder='Password'
-                        size='sm'
-                        borderRadius={12}
-                    />
+                        required
+                        />
+                        <InputRightElement>
+                            <Button
+                                h="full"
+                                bg="transparent"
+                                size="md"
+                                borderRightRadius="12px"
+                                borderLeftRadius="0"
+                                onClick={handleShow}>
+                                {show ? <ViewIcon /> : <ViewOffIcon />}
+                            </Button>
+                        </InputRightElement>
+                    </InputGroup>
                     <Flex gap={1} mb={2}>
                         <Text fontSize='xs'>Ulangi Password</Text>
                         <Text fontSize='xs' color='red'> *</Text>
                     </Flex>
-                    <Input
-                        type='password'
-                        name='password'
-                        value={password}
-                        onChange={(e) => handlePasswordChange(e)}
-                        bg='#fff'
+                    <InputGroup size="md">
+                        <Input
+                        type={showUlangi ? "text" : "password"}
+                        name='ulangiPassword'
+                        py="13px"
+                        px="20px"
+                        borderRadius="12px"
+                        bg="white"
+                        value={ulangiPassword}
+                        onChange={(e) => handleUlangiPasswordChange(e)}
                         placeholder='Ulangi Password'
-                        size='sm'
-                        borderRadius={12}
-                    />
+                        required
+                        />
+                        <InputRightElement>
+                            <Button
+                                h="full"
+                                bg="transparent"
+                                size="md"
+                                borderRightRadius="12px"
+                                borderLeftRadius="0"
+                                onClick={handleShowUlangi}>
+                                {showUlangi ? <ViewIcon /> : <ViewOffIcon />}
+                            </Button>
+                        </InputRightElement>
+                    </InputGroup>
                     <Button
                         size='sm'
                         bg='#BA181B'
@@ -110,7 +160,17 @@ const FormRegister = () => {
                             transform: 'scale(0.98)'
                         }}
                     >Daftar</Button>
-                </Box>
+                    <Center>
+                        <Flex mt="20px">
+                            <Text color="#737373" fontSize="sm">
+                                Sudah Punya Akun?
+                                <Link color="primary" fontWeight="bold" ml="1">
+                                    Masuk
+                                </Link>
+                            </Text>
+                        </Flex>
+                    </Center>
+                </Container>
             </VStack>
         </GridItem>
     )
