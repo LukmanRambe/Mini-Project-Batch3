@@ -16,7 +16,6 @@ const Layout = ({ children, title }) => {
 			<Box w='100%'>
 				<Header />
 				{children}
-				<Calendar />
 			</Box>
 		</Box>
 	)
