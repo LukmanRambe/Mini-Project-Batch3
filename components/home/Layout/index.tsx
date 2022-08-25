@@ -5,10 +5,11 @@ import Calendar from './Calendar'
 
 // Styles
 import { Box } from '@chakra-ui/react'
+import { ILayout } from '../../../ts/interface'
 
-const Layout = ({ children, title }) => {
+const Layout = ({ children, title }: ILayout) => {
 	return (
-		<Box display='flex' maxW='100%' minH='1024px'>
+		<Box bg='white' color='black' display='flex' maxW='100%' minH='1024px'>
 			<Head>
 				<title>{title}</title>
 			</Head>
