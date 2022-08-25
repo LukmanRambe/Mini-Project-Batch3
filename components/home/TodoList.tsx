@@ -1,5 +1,5 @@
 import React from "react";
-import { Todo } from "../../model";
+import { Todo } from "../../ts/interface";
 import { Box, Flex, Text, Button } from "@chakra-ui/react";
 
 interface Props {

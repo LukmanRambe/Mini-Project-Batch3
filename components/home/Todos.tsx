@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/home/Layout";
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Button } from "@chakra-ui/react";
+import AddModal from "./Modal/AddModal";
 
 // data Dummy
 import todo from "../../todos.json";
 
-import { Todo } from "../../model";
+import { Todo } from "../../ts/interface";
 import TodoList from "../../components/home/TodoList";
 const Todos = ({ Header }: any) => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [visibleAddModal, setVisibleAddModal] = useState(false);
   // pengetesan todo ketika kosong dan terdapat data
   useEffect(() => {
     setTimeout(() => {
@@ -18,6 +20,7 @@ const Todos = ({ Header }: any) => {
 
   return (
     <Box m="20px" border="1px" w="100%" borderColor="gray.200" h="780px">
+      <Button onClick={() => setVisibleAddModal(true)}>Tambah</Button>
       <Flex
         px="28px"
         align="center"
@@ -41,6 +44,11 @@ const Todos = ({ Header }: any) => {
           </Text>
         )}
       </Flex>
+      {/* add Todos */}
+      <AddModal
+        isOpen={visibleAddModal}
+        onClose={() => setVisibleAddModal((prev) => !prev)}
+      />
     </Box>
   );
 };
