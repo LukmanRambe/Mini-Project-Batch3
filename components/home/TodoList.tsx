@@ -1,4 +1,6 @@
-import React from 'react'
+import { useState } from 'react'
+import DeleteModal from './Modal/DeleteModal'
+
 import { Todo, FormatDate } from '../../ts/interface'
 import { Box, Flex, Text, Button } from '@chakra-ui/react'
 
@@ -9,6 +11,8 @@ interface Props {
 }
 
 const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+
 	const showFormattedDate = (date: string) => {
 		const options: FormatDate = {
 			weekday: 'long',
@@ -89,7 +93,8 @@ const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
 							<Button
 								bg='transparent'
 								color='primary'
-								_hover={{ background: 'gray.100' }}>
+								_hover={{ background: 'gray.100' }}
+								onClick={() => setIsDeleteModalOpen(prevState => !prevState)}>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'
 									width='24'
@@ -109,6 +114,14 @@ const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
 							</Button>
 						</Flex>
 					</Flex>
+
+					<DeleteModal
+						isDeleteModalOpen={isDeleteModalOpen}
+						setIsDeleteModalOpen={setIsDeleteModalOpen}
+						onDeleteModalClose={() =>
+							setIsDeleteModalOpen(prevState => !prevState)
+						}
+					/>
 				</Box>
 			))}
 		</div>

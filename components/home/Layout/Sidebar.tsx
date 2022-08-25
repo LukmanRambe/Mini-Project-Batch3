@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+// Components
+import LogoutModal from '../Modal/LogoutModal'
+
 // Styles
-import { Flex, Text, Box, Image } from '@chakra-ui/react'
+import { Flex, Text, Box, Image, Button } from '@chakra-ui/react'
 
 const Sidebar = () => {
 	const router = useRouter()
@@ -11,6 +14,7 @@ const Sidebar = () => {
 
 	const [activeTab, setActiveTab] = useState(pathName)
 	const [tabName, setTabName] = useState(pathName)
+	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
 
 	const handleClickActiveTab = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (pathName === event.currentTarget.id) setTabName(event.currentTarget.id)
@@ -65,6 +69,7 @@ const Sidebar = () => {
 							<Text
 								pl='14px'
 								fontSize='14px'
+								letterSpacing='0.025em'
 								fontWeight='500'
 								color={activeTab === '/home' ? '#000000' : '#6A686A'}
 								_hover={{ color: '#000000' }}>
@@ -98,6 +103,7 @@ const Sidebar = () => {
 							<Text
 								pl='14px'
 								fontSize='14px'
+								letterSpacing='0.025em'
 								fontWeight='500'
 								color={activeTab === '/done' ? '#000000' : '#6A686A'}
 								_hover={{ color: '#000000' }}>
@@ -128,6 +134,7 @@ const Sidebar = () => {
 							<Text
 								pl='14px'
 								fontSize='14px'
+								letterSpacing='0.025em'
 								fontWeight='500'
 								color={activeTab === '/overdue' ? '#000000' : '#6A686A'}
 								_hover={{ color: '#000000' }}>
@@ -140,31 +147,50 @@ const Sidebar = () => {
 
 				{/* START: Logout Tab */}
 				{/* <Link href='./logout'></Link> */}
+
 				<Box
+					role='group'
 					display='flex'
 					alignItems='center'
 					p='30px'
 					_hover={{ cursor: 'pointer' }}>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						width='24'
-						height='24'
-						viewBox='0 0 24 24'
-						fill='none'
-						stroke='#BA181B'
-						strokeWidth='2'
-						strokeLinecap='round'
-						strokeLinejoin='round'>
-						<path d='M13 12h9m0 0l-3.333-4M22 12l-3.333 4'></path>
-						<path d='M14 7V5.174a2 2 0 0 0-2.166-1.993l-8 .666A2 2 0 0 0 2 5.84v12.32a2 2 0 0 0 1.834 1.993l8 .667A2 2 0 0 0 14 18.826V17'></path>
-					</svg>
-					<Text pl='14px' fontSize='18px' fontWeight='500' color='#BA181B'>
-						Logout
-					</Text>
+					<Button
+						background='transparent'
+						onClick={() => setIsLogoutModalOpen(true)}
+						_hover={{ background: 'transparent' }}
+						_active={{ background: 'transparent' }}>
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							width='24'
+							height='24'
+							viewBox='0 0 24 24'
+							fill='none'
+							stroke='#BA181B'
+							strokeWidth='2'
+							strokeLinecap='round'
+							strokeLinejoin='round'>
+							<path d='M13 12h9m0 0l-3.333-4M22 12l-3.333 4'></path>
+							<path d='M14 7V5.174a2 2 0 0 0-2.166-1.993l-8 .666A2 2 0 0 0 2 5.84v12.32a2 2 0 0 0 1.834 1.993l8 .667A2 2 0 0 0 14 18.826V17'></path>
+						</svg>
+						<Text
+							pl='14px'
+							fontSize='18px'
+							fontWeight='500'
+							letterSpacing='0.025em'
+							color='#BA181B'
+							_groupHover={{ color: '#9e2427' }}>
+							Logout
+						</Text>
+					</Button>
 				</Box>
 				{/* END: Logout Tab */}
 			</Flex>
 			{/* END: Sidebar Tabs */}
+			<LogoutModal
+				isLogoutModalOpen={isLogoutModalOpen}
+				setIsLogoutModalOpen={setIsLogoutModalOpen}
+				onLogoutModalClose={() => setIsLogoutModalOpen(prev => !prev)}
+			/>
 		</Box>
 	)
 }

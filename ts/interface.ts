@@ -1,10 +1,22 @@
-import { SetStateAction } from 'react'
+import React, { SetStateAction } from 'react'
 
 interface IAddModal {
 	todos: Todo[]
 	setTodos: React.Dispatch<SetStateAction<Todo[]>>
 	isOpen: boolean
 	onClose: () => void
+}
+
+interface ILogoutModal {
+	isLogoutModalOpen: boolean
+	setIsLogoutModalOpen: React.Dispatch<SetStateAction<boolean>>
+	onLogoutModalClose: () => void
+}
+
+interface IDeleteModal {
+	isDeleteModalOpen: boolean
+	setIsDeleteModalOpen: React.Dispatch<SetStateAction<boolean>>
+	onDeleteModalClose: () => void
 }
 
 interface ILayout {
@@ -29,4 +41,4 @@ interface FormatDate {
 	day: string
 }
 
-export type { IAddModal, ILayout, Todo, FormatDate }
+export type { IAddModal, ILogoutModal, IDeleteModal, ILayout, Todo, FormatDate }

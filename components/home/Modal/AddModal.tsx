@@ -70,7 +70,7 @@ const AddModal = ({ todos, setTodos, isOpen, onClose }: IAddModal) => {
 	}
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
+		<Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={false}>
 			<ModalOverlay />
 			<ModalContent>
 				<ModalHeader textAlign='center' color='#BA181B'>
