@@ -1,11 +1,14 @@
-import Layout from '../../components/home/Layout'
+import React from "react";
+import Layout from "../../components/home/Layout";
+
+import Todos from "../../components/home/Todos";
 
 const Done = () => {
-	return (
-		<Layout title='Mini Project Vocasia - Done'>
-			<div>Done</div>
-		</Layout>
-	)
-}
+  return (
+    <Layout title="Mini Project Vocasia - Done">
+      <Todos Header="Done" />
+    </Layout>
+  );
+};
 
-export default Done
+export default Done;
