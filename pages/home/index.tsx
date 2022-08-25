@@ -2,6 +2,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import Layout from "../../components/home/Layout";
 import Todos from "../../components/home/Todos";
 import CalendarClock from "../../components/home/Layout/Calendar";
+
 const Home = () => {
   return (
     <Layout title="Mini Project Vocasia - Dashboard">

@@ -18,7 +18,7 @@ const Layout = ({ children, title }: ILayout) => {
         <Header />
         <Flex>
           {children}
-          <Calendar />
+          {/* <Calendar /> */}
         </Flex>
       </Box>
     </Box>
