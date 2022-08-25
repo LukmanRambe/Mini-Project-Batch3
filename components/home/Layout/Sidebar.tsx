@@ -12,8 +12,8 @@ const Sidebar = () => {
 	const [activeTab, setActiveTab] = useState(pathName)
 	const [tabName, setTabName] = useState(pathName)
 
-	const handleClickActiveTab = param => {
-		if (pathName === param.id) setTabName(param.id)
+	const handleClickActiveTab = (event: React.MouseEvent<HTMLDivElement>) => {
+		if (pathName === event.currentTarget.id) setTabName(event.currentTarget.id)
 	}
 
 	useEffect(() => {
@@ -55,7 +55,7 @@ const Sidebar = () => {
 								cursor: 'pointer',
 								borderLeftColor: '#BA181B'
 							}}
-							onClick={e => handleClickActiveTab(e.currentTarget)}>
+							onClick={event => handleClickActiveTab(event)}>
 							<Image
 								src='https://mini-project-vocasia.vercel.app/icon/todo.svg'
 								width='22px'
@@ -88,7 +88,7 @@ const Sidebar = () => {
 								cursor: 'pointer',
 								borderLeftColor: '#BA181B'
 							}}
-							onClick={e => handleClickActiveTab(e.currentTarget)}>
+							onClick={event => handleClickActiveTab(event)}>
 							<Image
 								src='https://mini-project-vocasia.vercel.app/icon/done.svg'
 								width='22px'
@@ -118,7 +118,7 @@ const Sidebar = () => {
 								activeTab === '/overdue' ? '#BA181B' : 'transparent'
 							}`}
 							_hover={{ cursor: 'pointer', borderLeftColor: '#BA181B' }}
-							onClick={e => handleClickActiveTab(e.currentTarget)}>
+							onClick={event => handleClickActiveTab(event)}>
 							<Image
 								src='https://mini-project-vocasia.vercel.app/icon/overdue.svg'
 								width='22px'
