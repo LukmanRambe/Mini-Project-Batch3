@@ -16,7 +16,19 @@ a {
 	margin: 0;
 	box-sizing: border-box;
 }
-
+.segitiga2{
+	border-left:solid 10px rgb(255, 255, 255);
+	border-top:solid 20px transparent;
+	border-bottom:solid 20px transparent;
+}
+.segitiga{
+	background-color: rgb(255, 255, 255)
+}
+.borderLeft{
+	margin-left: 10px;
+	margin-right: 10px;
+	border-left:solid 1px rgb(255, 255, 255);
+}
 @media (prefers-color-scheme: dark) {
 	html {
 		color-scheme: dark;
