@@ -1,20 +1,20 @@
 [
-  {
-    "id": 1,
-    "title": "test1",
-    "body": "Data Dummy json",
-    "jam_task": "07:28",
-    "tanggal_task": "Kamis, 25 Agustus 2022",
-    "is_done": true,
-    "overdue": false
-  },
-  {
-    "id": 2,
-    "title": "test2",
-    "body": "Data Dummy json yang ke 2",
-    "jam_task": "09:30",
-    "tanggal_task": "jum'at, 26 Agustus 2022",
-    "is_done": true,
-    "overdue": false
-  }
+	{
+		"id": 1,
+		"title": "test1",
+		"body": "Data Dummy json",
+		"jam_task": "07:28",
+		"tanggal_task": "Kamis, 25 Agustus 2022",
+		"status_task": "todo",
+		"overdue": false
+	},
+	{
+		"id": 2,
+		"title": "test2",
+		"body": "Data Dummy json yang ke 2",
+		"jam_task": "09:30",
+		"tanggal_task": "jum'at, 26 Agustus 2022",
+		"status_task": "todo",
+		"overdue": true
+	}
 ]
