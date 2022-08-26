@@ -34,11 +34,12 @@ const Login = () => {
         minH="100vh"
         display="flex"
         justifyContent="center"
-        alignItems="center">
+        alignItems="center"
+      >
         <Container>
           <Box textAlign="center" mb={7}>
             <Heading as="h1" size="md" mt={2}>
-              Daftar
+              Masuk
             </Heading>
           </Box>
           <form action="submit">
@@ -83,13 +84,14 @@ const Login = () => {
                     size="md"
                     borderRightRadius="12px"
                     borderLeftRadius="0"
-                    onClick={handleShow}>
+                    onClick={handleShow}
+                  >
                     {show ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
               <Flex justify="flex-end" mt="15px">
-                <NextLink href="/auth/forgot-password" passHref>
+                <NextLink href="/auth/forget" passHref>
                   <Link color="primary">Lupa Password?</Link>
                 </NextLink>
               </Flex>
@@ -103,7 +105,8 @@ const Login = () => {
                 _active={{
                   bg: "#9e2427",
                   transform: "scale(0.98)",
-                }}>
+                }}
+              >
                 Daftar
               </Button>
             </FormControl>
@@ -127,4 +130,3 @@ const Login = () => {
 };
 
 export default Login;
-

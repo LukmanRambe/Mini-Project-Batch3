@@ -2,20 +2,20 @@ import Head from "next/head";
 import { Grid } from "@chakra-ui/react";
 
 import LayoutAuth from "../../components/auth/layout";
-import FormRegister from "../../components/auth/Register";
-const Register = () => {
+import ForgetFrom from "../../components/auth/Forget";
+const Forgot = () => {
   return (
     <>
       <Head>
-        <title>Daftar</title>
+        <title>Lupa Password</title>
       </Head>
 
       <Grid bg="#F8F8FB" templateColumns={{ base: "1fr", md: "1fr 1fr" }}>
         <LayoutAuth />
-        <FormRegister />
+        <ForgetFrom />
       </Grid>
     </>
   );
 };
 
-export default Register;
+export default Forgot;
