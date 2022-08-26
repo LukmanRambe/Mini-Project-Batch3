@@ -90,7 +90,7 @@ const Login = () => {
                 </InputRightElement>
               </InputGroup>
               <Flex justify="flex-end" mt="15px">
-                <NextLink href="/auth/forgot-password" passHref>
+                <NextLink href="/auth/forget" passHref>
                   <Link color="primary">Lupa Password?</Link>
                 </NextLink>
               </Flex>

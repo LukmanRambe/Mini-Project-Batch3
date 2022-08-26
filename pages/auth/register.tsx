@@ -1,25 +1,21 @@
+import Head from "next/head";
+import { Grid } from "@chakra-ui/react";
 
-import Head from 'next/head';
-import {Grid} from '@chakra-ui/react';
-
-import LayoutAuth from '../../components/auth/layout';
-import FormRegister from '../../components/auth/Register';
+import LayoutAuth from "../../components/auth/layout";
+import FormRegister from "../../components/auth/Register";
 const Register = () => {
-    
-    return (
-        <>
-            <Head>
-                <title>Register</title>
-            </Head>
-    
-            <Grid bg='#F8F8FB' templateColumns={{ base: '1fr', md: '1fr 1fr' }}>
-                <LayoutAuth />
-                <FormRegister />
-            </Grid>
-    
-        </>
-    )
-}
+  return (
+    <>
+      <Head>
+        <title>Daftar</title>
+      </Head>
+
+      <Grid bg="#F8F8FB" templateColumns={{ base: "1fr", md: "1fr 1fr" }}>
+        <LayoutAuth />
+        <FormRegister />
+      </Grid>
+    </>
+  );
+};
 
 export default Register;
-
