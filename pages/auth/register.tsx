@@ -3,7 +3,7 @@ import Head from 'next/head';
 import {Grid} from '@chakra-ui/react';
 
 import LayoutAuth from '../../components/auth/layout';
-import FormRegister from '../../components/auth/form-register';
+import FormRegister from '../../components/auth/Register';
 const Register = () => {
     
     return (
