@@ -42,52 +42,55 @@ const Login = () => {
         <Heading as="h2" size="lg">
           Masuk
         </Heading>
-        <form action="submit" style={{ width: "100%" }}>
-          <FormControl isRequired>
-            <FormLabel>Email</FormLabel>
-            <Input
-              bg="white"
-              borderRadius="12px"
-              py="13px"
-              px="20px"
-              required
-            />
-            <Box mt="16px">
-              <FormLabel>Password</FormLabel>
-              <InputGroup size="md">
-                <Input
-                  py="13px"
-                  px="20px"
-                  type={show ? "text" : "password"}
-                  borderRadius="12px"
-                  bg="white"
-                  required
-                />
-                <InputRightElement>
-                  <Button
-                    h="full"
-                    bg="transparent"
-                    size="md"
-                    borderRightRadius="12px"
-                    borderLeftRadius="0"
-                    onClick={handleShow}>
-                    {show ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </Box>
-            {/* Lupa Password */}
-            <Flex justify="flex-end" mt="15px">
-              <NextLink href="/auth/forgot-password" passHref>
-                <Link color="primary">Lupa Password?</Link>
-              </NextLink>
-            </Flex>
+        {/* <form action="submit" style={{ width: "100%" }}> */}
+        <FormControl isRequired>
+          <FormLabel>Email</FormLabel>
+          <Input
+            bg="white"
+            id="email"
+            type="email"
+            borderRadius="12px"
+            py="13px"
+            px="20px"
+            required
+          />
+          <Box mt="16px">
+            <FormLabel>Password</FormLabel>
+            <InputGroup size="md">
+              <Input
+                py="13px"
+                px="20px"
+                id="password"
+                type={show ? "text" : "password"}
+                borderRadius="12px"
+                bg="white"
+                required
+              />
+              <InputRightElement>
+                <Button
+                  h="full"
+                  bg="transparent"
+                  size="md"
+                  borderRightRadius="12px"
+                  borderLeftRadius="0"
+                  onClick={handleShow}>
+                  {show ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </Box>
+          {/* Lupa Password */}
+          <Flex justify="flex-end" mt="15px">
+            <NextLink href="/auth/forgot-password" passHref>
+              <Link color="primary">Lupa Password?</Link>
+            </NextLink>
+          </Flex>
 
-            <Button mt="40px" variant="primary" w="100%" type="submit">
-              LOGIN
-            </Button>
-          </FormControl>
-        </form>
+          <Button mt="40px" variant="primary" w="100%" type="submit">
+            LOGIN
+          </Button>
+        </FormControl>
+        {/* </form> */}
         <Flex mt="20px">
           <Text color="#737373" fontSize="lg">
             Belum Punya Akun?
