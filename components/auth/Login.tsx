@@ -115,7 +115,7 @@ const Login = () => {
                 Belum Punya Akun?
                 <NextLink href="/auth/register" passHref>
                   <Link color="primary" fontWeight="bold" ml="1">
-                    Masuk
+                    Daftar
                   </Link>
                 </NextLink>
               </Text>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Box, Flex, Heading, Text, Button } from "@chakra-ui/react";
+import styles from "../../styles/Home.module.css";
 
 // data Dummy
-// import todo from "../../todos.json";
+import todo from "../../todos.json";
 import { Todo } from "../../ts/interface";
 import TodoList from "../../components/home/TodoList";
 import AddModal from "./Modal/AddModal";
@@ -16,14 +17,19 @@ const Todos = ({ Header, todo_status, overdue }: any) => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [visibleAddModal, setVisibleAddModal] = useState(false);
   // pengetesan todo ketika kosong dan terdapat data
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTodos(todo);
-  //   }, 5000);
-  // }, [todos]);
+  useEffect(() => {
+    setTimeout(() => {
+      setTodos(todo);
+    }, 5000);
+  }, [todos]);
 
   return (
-    <Box m="20px" border="1px" w="100%" borderColor="gray.200" h="780px">
+    <Box
+      flex="3"
+      m={{ base: "0px", xl: "20px" }}
+      border="1px"
+      w="full"
+      borderColor="gray.200">
       <Flex
         px="28px"
         align="center"
@@ -42,7 +48,13 @@ const Todos = ({ Header, todo_status, overdue }: any) => {
           ""
         )}
       </Flex>
-      <Flex h="100%" direction="column" overflowY="auto" px="28px">
+      <Flex
+        direction="column"
+        overflowY="auto"
+        px="28px"
+        pb="28px"
+        h={{ base: "500px", xl: "780px" }}
+        className={styles.todo}>
         {/* Todos Done */}
         {todos.length != 0 ? (
           <TodoList todos={todos} todo_status={todo_status} overdue={overdue} />
