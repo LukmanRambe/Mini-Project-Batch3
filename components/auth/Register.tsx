@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Button,
   GridItem,
@@ -22,8 +23,48 @@ const FormRegister = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [ulangiPassword, setUlangiPassword] = useState("");
+  const [password_confirmation, setPasswordConfirmation] = useState("");
 
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorPasswordConfirm, setErrorPasswordConfirm] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const user = { name, email, password, password_confirmation };
+
+    const filter =
+      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    const filterPas = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+    if (filter.test(email)) {
+      setErrorEmail("");
+      if (filterPas.test(password)) {
+        setErrorPassword("");
+        if (password === password_confirmation) {
+          // console.log(user);
+          fetch("https://nouky.xyz/b3/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user),
+          }).then(() => {
+            console.log("chekc");
+          });
+        } else {
+          setErrorPasswordConfirm(
+            "Password Konfirmasi tidak valid. Pastikan Password benar."
+          );
+        }
+      } else {
+        setErrorPasswordConfirm("");
+        setErrorPassword(
+          "Password tidak valid. Pastikan format Password benar."
+        );
+      }
+    } else {
+      setErrorEmail("Email tidak valid. Pastikan format email benar.");
+    }
+  };
+
+  // showPassword
   const [show, setShow] = useState<boolean>(false);
   const [showUlangi, setShowUlangi] = useState<boolean>(false);
 
@@ -33,20 +74,7 @@ const FormRegister = () => {
   const handleShowUlangi = () => {
     setShowUlangi(!showUlangi);
   };
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-  const handleUlangiPasswordChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setUlangiPassword(event.target.value);
-  };
+
   return (
     <GridItem>
       <VStack
@@ -54,14 +82,15 @@ const FormRegister = () => {
         minH="100vh"
         display="flex"
         justifyContent="center"
-        alignItems="center">
+        alignItems="center"
+      >
         <Container>
           <Box textAlign="center" mb={7}>
             <Heading as="h1" size="md" mt={2}>
               Daftar
             </Heading>
           </Box>
-          <form action="submit">
+          <form onSubmit={handleSubmit}>
             <FormControl isRequired>
               <Flex marginTop={4} marginBottom={2}>
                 <Text fontSize="md">Nama </Text>
@@ -77,7 +106,7 @@ const FormRegister = () => {
                 borderRadius="12px"
                 bg="white"
                 value={name}
-                onChange={(e) => handleNameChange(e)}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Masukkan Nama"
                 required
               />
@@ -96,9 +125,12 @@ const FormRegister = () => {
                 bg="white"
                 placeholder="Masukkan Email"
                 value={email}
-                onChange={(e) => handleEmailChange(e)}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              <Text color="tomato" fontSize="sm">
+                {errorEmail}
+              </Text>
               <Flex gap={1} marginTop={4} marginBottom={2}>
                 <Text fontSize="md">Password </Text>
                 <Text fontSize="md" color="red">
@@ -114,7 +146,7 @@ const FormRegister = () => {
                   borderRadius="12px"
                   bg="white"
                   value={password}
-                  onChange={(e) => handlePasswordChange(e)}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
                   required
                 />
@@ -125,11 +157,15 @@ const FormRegister = () => {
                     size="md"
                     borderRightRadius="12px"
                     borderLeftRadius="0"
-                    onClick={handleShow}>
+                    onClick={handleShow}
+                  >
                     {show ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              <Text color="tomato" fontSize="sm">
+                {errorPassword}
+              </Text>
               <Flex gap={1} marginTop={4} marginBottom={2}>
                 <Text fontSize="md">Ulangi Password</Text>
                 <Text fontSize="md" color="red">
@@ -145,8 +181,8 @@ const FormRegister = () => {
                   px="20px"
                   borderRadius="12px"
                   bg="white"
-                  value={ulangiPassword}
-                  onChange={(e) => handleUlangiPasswordChange(e)}
+                  value={password_confirmation}
+                  onChange={(e) => setPasswordConfirmation(e.target.value)}
                   placeholder="Ulangi Password"
                   required
                 />
@@ -157,12 +193,17 @@ const FormRegister = () => {
                     size="md"
                     borderRightRadius="12px"
                     borderLeftRadius="0"
-                    onClick={handleShowUlangi}>
+                    onClick={handleShowUlangi}
+                  >
                     {showUlangi ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              <Text color="tomato" fontSize="sm">
+                {errorPasswordConfirm}
+              </Text>
               <Button
+                type="submit"
                 size="md"
                 bg="#BA181B"
                 _hover={{ bg: "#9e2427" }}
@@ -172,7 +213,8 @@ const FormRegister = () => {
                 _active={{
                   bg: "#9e2427",
                   transform: "scale(0.98)",
-                }}>
+                }}
+              >
                 Daftar
               </Button>
             </FormControl>
