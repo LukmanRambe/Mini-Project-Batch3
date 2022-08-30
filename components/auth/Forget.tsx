@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useRouter } from 'next/router'
 
 import {
@@ -14,102 +15,87 @@ import {
 	Container,
 	Center,
 	FormControl,
-	Alert,
-	AlertIcon,
-	AlertTitle,
-	AlertDescription,
-	CloseButton
+	FormErrorMessage,
+	FormLabel,
+	useToast
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
 const ForgetFrom = () => {
 	const router = useRouter()
+	const toast = useToast()
 
 	const [email, setEmail] = useState<string>('')
-	const [message, setMessage] = useState<string | null>(null)
-	const [responseCode, setResponseCode] = useState<number | null>(null)
-
+	const [isError, setIsError] = useState(false)
 	const handleEmailChange = (
 		event: React.ChangeEvent<HTMLInputElement>
 	): void => {
 		setEmail(event.target.value)
 	}
 
-	const handleClose = (): void => {
-		setMessage('')
-		setResponseCode(null)
-	}
-
-	const handleEmailSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
-		event.preventDefault()
+	const handleEmailSubmit = async () => {
+		const data = JSON.stringify({ email })
 
 		if (email.trim() === '') {
-			setMessage('Email Harus Diisi!')
+			setIsError(true)
 		} else {
-			fetchAPI('https://nouky.xyz/b3/forgot_password')
-		}
-	}
+			if (email) {
+				await axios
+					.post('https://nouky.xyz/b3/forgot_password', data, {
+						headers: {
+							'Content-Type': 'application/json; charset=utf-8'
+						}
+					})
+					.then(result => {
+						if (result.data.code === 200) {
+							toast({
+								position: 'top',
+								title: 'Berhasil',
+								description: result.data.message,
+								status: 'success',
+								duration: 3000,
+								isClosable: true
+							})
 
-	const fetchAPI = async (url: string) => {
-		try {
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json; charset=utf-8'
-				},
-				body: JSON.stringify({ email })
-			})
-
-			const responseData = await response.json()
-
-			if (responseData.code === 200) {
-				setResponseCode(responseData.code)
-				setMessage(responseData.message)
-
-				setTimeout(() => {
-					router.push('/')
-					setResponseCode(null)
-					setMessage('')
-				}, 3000)
-			} else {
-				setResponseCode(responseData.status)
-				setMessage(responseData.messages.error)
+							setTimeout(() => {
+								router.push('/')
+							}, 2500)
+						}
+					})
+					.catch(err => {
+						if (err.code === 'ECONNABORTED') {
+							toast({
+								position: 'top',
+								title: 'Gagal',
+								description:
+									'Tidak dapat menjangkau Server, periksa koneksi Anda dan ulangi beberapa saat lagi.',
+								status: 'error',
+								duration: 3000,
+								isClosable: true
+							})
+						} else if (err.response) {
+							toast({
+								position: 'top',
+								title: 'Gagal',
+								description: err.response.data.messages.error,
+								status: 'error',
+								duration: 3000,
+								isClosable: true
+							})
+						}
+					})
 			}
-		} catch (err) {
-			console.log(err)
 		}
 	}
+
+	useEffect(() => {
+		if (email !== '') {
+			setIsError(false)
+		}
+	}, [email])
 
 	return (
 		<GridItem>
-			{message && (
-				<Alert
-					status={responseCode === 200 ? 'success' : 'error'}
-					position='absolute'
-					w='auto'
-					top='2'
-					left='50%'
-					transform='translateX(-50%)'
-					borderRadius='md'
-					color='white'
-					bg={responseCode === 200 ? 'green.400' : 'red.400'}>
-					<AlertIcon color='white' />
-					<Box pr={10} pl={2}>
-						<AlertTitle>
-							{responseCode === 200 ? 'Berhasil' : 'Gagal'}
-						</AlertTitle>
-						<AlertDescription>{message}</AlertDescription>
-					</Box>
-					<CloseButton
-						alignSelf='flex-start'
-						position='absolute'
-						right={2}
-						top={2}
-						onClick={handleClose}
-					/>
-				</Alert>
-			)}
-
 			<VStack
 				w='full'
 				minH='100vh'
@@ -122,51 +108,47 @@ const ForgetFrom = () => {
 							Lupa Password
 						</Heading>
 					</Box>
-					<form method='POST' onSubmit={event => handleEmailSubmit(event)}>
-						<FormControl>
-							<Box textAlign='center' mb={7}>
-								<Text fontSize='sm' color='#737373' mt={3}>
-									Masukan email yang telah terdaftar,
-								</Text>
-								<Text fontSize='sm' color='#737373'>
-									kami akan mengirim link untuk mengembalikan akunmu
-								</Text>
-							</Box>
-							<Flex gap={1} marginTop={4} marginBottom={2}>
-								<Text fontSize='md'>Email </Text>
-								<Text fontSize='md' color='red'>
-									{' '}
-									*
-								</Text>
-							</Flex>
-							<Input
-								type='text'
-								py='13px'
-								px='20px'
-								borderRadius='12px'
-								bg='white'
-								placeholder='Masukkan Email'
-								value={email}
-								onChange={e => handleEmailChange(e)}
-								autoFocus={true}
-							/>
+					<FormControl isInvalid={isError === true} isRequired>
+						<Box textAlign='center' mb={7}>
+							<Text fontSize='sm' color='#737373' mt={3}>
+								Masukan email yang telah terdaftar,
+							</Text>
+							<Text fontSize='sm' color='#737373'>
+								kami akan mengirim link untuk mengembalikan akunmu
+							</Text>
+						</Box>
+						<FormLabel>Email</FormLabel>
+						<Input
+							type='email'
+							py='13px'
+							px='20px'
+							borderRadius='12px'
+							bg='white'
+							placeholder='Masukkan Email'
+							value={email}
+							onChange={e => handleEmailChange(e)}
+							autoFocus={true}
+						/>
+						{isError && (
+							<FormErrorMessage>Email tidak boleh kosong!</FormErrorMessage>
+						)}
 
-							<Button
-								type='submit'
-								size='md'
-								bg='#BA181B'
-								_hover={{ bg: '#9e2427' }}
-								color='#fff'
-								mt={7}
-								w='full'
-								_active={{
-									bg: '#9e2427',
-									transform: 'scale(0.98)'
-								}}>
-								Kirim Email
-							</Button>
-						</FormControl>
-					</form>
+						<Button
+							type='submit'
+							mt={7}
+							w='full'
+							size='md'
+							color='#fff'
+							bg='#BA181B'
+							_hover={{ bg: '#9e2427' }}
+							_active={{
+								bg: '#9e2427',
+								transform: 'scale(0.98)'
+							}}
+							onClick={handleEmailSubmit}>
+							Kirim Email
+						</Button>
+					</FormControl>
 					<Center>
 						<Flex mt='20px'>
 							<NextLink href='/' passHref>
