@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
   Button,
   GridItem,
@@ -15,48 +14,106 @@ import {
   Container,
   Center,
   FormControl,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  CloseButton,
+  Spinner,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 const FormRegister = () => {
+  const router = useRouter();
+
+  // stateInput
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
 
+  // error
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [errorPasswordConfirm, setErrorPasswordConfirm] = useState("");
-  const handleSubmit = (e) => {
+
+  // alert
+  const [message, setMessage] = useState<string | null>(null);
+  const [responseCode, setResponseCode] = useState<number | null>(null);
+  const handleClose = (): void => {
+    setMessage("");
+    setResponseCode(null);
+  };
+  const [loading, setLoading] = useState(false);
+
+  // RegisterButton
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const user = { name, email, password, password_confirmation };
 
     const filter =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     const filterPas = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+
     if (filter.test(email)) {
       setErrorEmail("");
       if (filterPas.test(password)) {
         setErrorPassword("");
         if (password === password_confirmation) {
           // console.log(user);
-          fetch("https://nouky.xyz/b3/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user),
-          }).then(() => {
-            console.log("chekc");
-          });
+          try {
+            setLoading(true);
+            const response = await fetch("https://nouky.xyz/b3/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+              },
+              body: JSON.stringify(user),
+            });
+
+            const responseData = await response.json();
+
+            if (responseData.code === 201) {
+              setResponseCode(responseData.code);
+              setMessage(responseData.message);
+
+              setTimeout(() => {
+                router.push("/");
+                setResponseCode(null);
+                setMessage("");
+              }, 3000);
+            } else {
+              setResponseCode(responseData.status);
+              setMessage(responseData.messages.error);
+            }
+          } catch (err) {
+            setLoading(true);
+            setTimeout(() => {
+              setLoading(false);
+              console.log(err);
+              setResponseCode(400);
+              setMessage("Server Terjadi Masalah");
+            }, 500);
+          }
+
+          // fetch("https://nouky.xyz/b3/register", {
+          //   method: "POST",
+          //   headers: { "Content-Type": "application/json" },
+          //   body: JSON.stringify(user),
+          // }).then(() => {
+          //   console.log("chekc");
+          // });
         } else {
           setErrorPasswordConfirm(
-            "Password Konfirmasi tidak valid. Pastikan Password benar."
+            "Password tidak sama. Pastikan Password benar."
           );
         }
       } else {
         setErrorPasswordConfirm("");
         setErrorPassword(
-          "Password tidak valid. Pastikan format Password benar."
+          "Password tidak valid. (minimal 8 karakter, menggunakan minimal satu huruf besar dan angka)"
         );
       }
     } else {
@@ -77,6 +134,35 @@ const FormRegister = () => {
 
   return (
     <GridItem>
+      {message && (
+        <Alert
+          status={responseCode === 201 ? "success" : "error"}
+          position="absolute"
+          w="auto"
+          top="2"
+          left="50%"
+          transform="translateX(-50%)"
+          borderRadius="md"
+          color="white"
+          bg={responseCode === 201 ? "green.400" : "red.400"}
+        >
+          <AlertIcon color="white" />
+          <Box pr={10} pl={2}>
+            <AlertTitle>
+              {responseCode === 201 ? "Berhasil" : "Gagal"}
+            </AlertTitle>
+            <AlertDescription>{message}</AlertDescription>
+          </Box>
+          <CloseButton
+            alignSelf="flex-start"
+            position="absolute"
+            right={2}
+            top={2}
+            onClick={handleClose}
+          />
+        </Alert>
+      )}
+
       <VStack
         w="full"
         minH="100vh"
@@ -215,7 +301,8 @@ const FormRegister = () => {
                   transform: "scale(0.98)",
                 }}
               >
-                Daftar
+                {!loading && <p> Daftar</p>}
+                {loading && <Spinner> </Spinner>}
               </Button>
             </FormControl>
           </form>
