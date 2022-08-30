@@ -3,8 +3,6 @@ import { useRouter } from "next/router";
 import { Box, Flex, Heading, Text, Button } from "@chakra-ui/react";
 import styles from "../../styles/Home.module.css";
 
-// data Dummy
-import todo from "../../todos.json";
 import { Todo } from "../../ts/interface";
 import TodoList from "../../components/home/TodoList";
 import AddModal from "./Modal/AddModal";
@@ -19,7 +17,7 @@ const Todos = ({ Header, todo_status, overdue }: any) => {
   // pengetesan todo ketika kosong dan terdapat data
   useEffect(() => {
     setTimeout(() => {
-      setTodos(todo);
+      setTodos(todos);
     }, 5000);
   }, [todos]);
 
