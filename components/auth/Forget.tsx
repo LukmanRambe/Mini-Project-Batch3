@@ -33,7 +33,11 @@ const ForgetFrom = () => {
 		setEmail(event.target.value)
 	}
 
-	const handleEmailSubmit = async () => {
+	const handleEmailSubmit = async (
+		event: React.SyntheticEvent<HTMLFormElement>
+	) => {
+		event.preventDefault()
+
 		const data = JSON.stringify({ email })
 
 		if (email.trim() === '') {
@@ -108,47 +112,50 @@ const ForgetFrom = () => {
 							Lupa Password
 						</Heading>
 					</Box>
-					<FormControl isInvalid={isError === true} isRequired>
-						<Box textAlign='center' mb={7}>
-							<Text fontSize='sm' color='#737373' mt={3}>
-								Masukan email yang telah terdaftar,
-							</Text>
-							<Text fontSize='sm' color='#737373'>
-								kami akan mengirim link untuk mengembalikan akunmu
-							</Text>
-						</Box>
-						<FormLabel>Email</FormLabel>
-						<Input
-							type='email'
-							py='13px'
-							px='20px'
-							borderRadius='12px'
-							bg='white'
-							placeholder='Masukkan Email'
-							value={email}
-							onChange={e => handleEmailChange(e)}
-							autoFocus={true}
-						/>
-						{isError && (
-							<FormErrorMessage>Email tidak boleh kosong!</FormErrorMessage>
-						)}
 
-						<Button
-							type='submit'
-							mt={7}
-							w='full'
-							size='md'
-							color='#fff'
-							bg='#BA181B'
-							_hover={{ bg: '#9e2427' }}
-							_active={{
-								bg: '#9e2427',
-								transform: 'scale(0.98)'
-							}}
-							onClick={handleEmailSubmit}>
-							Kirim Email
-						</Button>
-					</FormControl>
+					<form method='POST' onSubmit={event => handleEmailSubmit(event)}>
+						<FormControl isInvalid={isError === true} isRequired>
+							<Box textAlign='center' mb={7}>
+								<Text fontSize='sm' color='#737373' mt={3}>
+									Masukan email yang telah terdaftar,
+								</Text>
+								<Text fontSize='sm' color='#737373'>
+									kami akan mengirim link untuk mengembalikan akunmu
+								</Text>
+							</Box>
+							<FormLabel>Email</FormLabel>
+							<Input
+								type='email'
+								py='13px'
+								px='20px'
+								borderRadius='12px'
+								bg='white'
+								placeholder='Masukkan Email'
+								value={email}
+								onChange={e => handleEmailChange(e)}
+								autoFocus={true}
+							/>
+							{isError && (
+								<FormErrorMessage>Email tidak boleh kosong!</FormErrorMessage>
+							)}
+
+							<Button
+								type='submit'
+								mt={7}
+								w='full'
+								size='md'
+								color='#fff'
+								bg='#BA181B'
+								_hover={{ bg: '#9e2427' }}
+								_active={{
+									bg: '#9e2427',
+									transform: 'scale(0.98)'
+								}}>
+								Kirim Email
+							</Button>
+						</FormControl>
+					</form>
+
 					<Center>
 						<Flex mt='20px'>
 							<NextLink href='/' passHref>
