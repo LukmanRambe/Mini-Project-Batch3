@@ -12,7 +12,6 @@ interface IGetMeResponse {
 }
 
 interface IAddModal {
-	todos: Todo[]
 	isOpen: boolean
 	onClose: () => void
 }

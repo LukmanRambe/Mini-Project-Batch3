@@ -18,8 +18,10 @@ import {
     useToast
 } from '@chakra-ui/react'
 import { IAddModal, Todo } from '../../../ts/interface'
+import { serviceURL } from '../../../utils/config'
+import { mutate } from 'swr'
 
-const AddModal = ({ todos, isOpen, onClose }: IAddModal) => {
+const AddModal = ({ isOpen, onClose }: IAddModal) => {
     const date = new Date()
     let tempHours = `${date.getHours() < 10 ? '0' : ''}${date.getHours()}`
     let tempMinutes = `${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}`
@@ -59,7 +61,6 @@ const AddModal = ({ todos, isOpen, onClose }: IAddModal) => {
                         Authorization: "Bearer " + localStorage.getItem('xtoken'),
                     },
                 }).then(result => {
-                    console.log(result)
                     if (result.data.code === 200) {
                         toast({
                             title: result.data.message,
@@ -89,6 +90,7 @@ const AddModal = ({ todos, isOpen, onClose }: IAddModal) => {
                             tanggal: date.toISOString().substring(0, 10)
                         })
                     }
+                    mutate(`${serviceURL}/task/show_todo`)
                 }).catch(err => {
                     if (err.code === "ECONNABORTED") {
                         toast({

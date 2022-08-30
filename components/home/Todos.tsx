@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Box, Flex, Heading, Text, Button } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Button, useToast } from "@chakra-ui/react";
 import styles from "../../styles/Home.module.css";
-
-import { Todo } from "../../ts/interface";
 import TodoList from "../../components/home/TodoList";
 import AddModal from "./Modal/AddModal";
-// import Layout from "../../components/home/Layout";
+import { useTodo } from "../../hooks/remote/useTodo";
 
-const Todos = ({ Header, todo_status, overdue }: any) => {
+const Todos = ({ Header }: any) => {
   const router = useRouter();
+  const toast = useToast()
   const pathName = router.asPath;
-
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const { todos, errorTodos } = useTodo()
   const [visibleAddModal, setVisibleAddModal] = useState(false);
-  // pengetesan todo ketika kosong dan terdapat data
-  useEffect(() => {
-    setTimeout(() => {
-      setTodos(todos);
-    }, 5000);
-  }, [todos]);
 
+  if (errorTodos) {
+    toast({
+      title: errorTodos.message,
+      status: 'error',
+      duration: 9000,
+      isClosable: true,
+    })
+  }
   return (
     <Box
       flex="3"
@@ -54,8 +54,8 @@ const Todos = ({ Header, todo_status, overdue }: any) => {
         h={{ base: "500px", xl: "780px" }}
         className={styles.todo}>
         {/* Todos Done */}
-        {todos.length != 0 ? (
-          <TodoList todos={todos} todo_status={todo_status} overdue={overdue} />
+        {todos?.data?.length != 0 ? (
+          <TodoList todos={todos?.data} />
         ) : (
           <Text textAlign="center" mb="25px">
             Belum ada Tugas untuk dilakukan
@@ -64,8 +64,6 @@ const Todos = ({ Header, todo_status, overdue }: any) => {
       </Flex>
       {/* add Todos */}
       <AddModal
-        todos={todos}
-        setTodos={setTodos}
         isOpen={visibleAddModal}
         onClose={() => setVisibleAddModal((prev) => !prev)}
       />
