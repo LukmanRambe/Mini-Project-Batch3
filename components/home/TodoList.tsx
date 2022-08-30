@@ -3,30 +3,18 @@ import DeleteModal from "./Modal/DeleteModal";
 
 import { Todo, FormatDate } from "../../ts/interface";
 import { Box, Flex, Text, Button, Checkbox } from "@chakra-ui/react";
+import moment from 'moment';
 
 interface Props {
   todos: Todo[];
-  todo_keterangan: string;
-  overdue: boolean;
 }
 
-const TodoList: React.FC<Props> = ({ todos, todo_keterangan, overdue }: Props) => {
+const TodoList: React.FC<Props> = ({ todos }: Props) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  console.log(todos);
-  const showFormattedDate = (date: string) => {
-    const options: FormatDate = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-
-    return new Date(date).toLocaleDateString("id", options);
-  };
 
   return (
     <div>
-      {todos.map((todo, index) => (
+      {todos?.map((todo, index) => (
         <Box boxShadow="rgb(173 173 173 / 10%) 0px 6px 0px 0px" key={index}>
           <Flex direction="row" justify="space-between" w="full" align="center">
             <Flex
@@ -89,7 +77,7 @@ const TodoList: React.FC<Props> = ({ todos, todo_keterangan, overdue }: Props) =
                     {todo.jam}
                   </Text>
                   <Text mr={2} fontSize="sm">
-                    - {showFormattedDate(todo.tanggal)}
+                    - {moment(todo.tanggal).locale("id").format("dddd, DD MMMM YYYY")}
                   </Text>
                 </Flex>
               </Box>

@@ -16,6 +16,7 @@
     "@natscale/react-calendar": "^0.0.0-beta.26",
     "axios": "^0.27.2",
     "framer-motion": "^7.2.0",
+    "moment": "^2.29.4",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-analogue-clock": "^0.3.2",
