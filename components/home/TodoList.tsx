@@ -6,11 +6,11 @@ import { Box, Flex, Text, Button, Checkbox } from "@chakra-ui/react";
 
 interface Props {
   todos: Todo[];
-  todo_status: string;
+  todo_keterangan: string;
   overdue: boolean;
 }
 
-const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
+const TodoList: React.FC<Props> = ({ todos, todo_keterangan, overdue }: Props) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   console.log(todos);
   const showFormattedDate = (date: string) => {
@@ -26,15 +26,15 @@ const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
 
   return (
     <div>
-      {todos.map((todo) => (
-        <Box boxShadow="rgb(173 173 173 / 10%) 0px 6px 0px 0px" key={todo.id}>
+      {todos.map((todo, index) => (
+        <Box boxShadow="rgb(173 173 173 / 10%) 0px 6px 0px 0px" key={index}>
           <Flex direction="row" justify="space-between" w="full" align="center">
             <Flex
               align="center"
-              opacity={`${todo.status_task === "done" ? "0.6" : ""}`}>
+              opacity={`${todo.keterangan === "Done" ? "0.6" : ""}`}>
               <Box
                 _hover={{
-                  color: `${todo.status_task !== "done" ? "primary" : ""}`,
+                  color: `${todo.keterangan !== "Done" ? "primary" : ""}`,
                   cursor: "pointer",
                 }}
                 _checked={{ color: "primary" }}>
@@ -43,7 +43,7 @@ const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
-                  fill={`${todo.status_task === "done" ? "#C53030" : "none"}`}
+                  fill={`${todo.keterangan === "Done" ? "#C53030" : "none"}`}
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
@@ -51,12 +51,12 @@ const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
                   <rect
                     x="3"
                     y="3"
-                    color={`${todo.status_task === "done" ? "#C53030" : ""}`}
+                    color={`${todo.keterangan === "Done" ? "#C53030" : ""}`}
                     width="18"
                     height="18"
                     rx="4"></rect>
                   <path
-                    color={`${todo.status_task === "done" ? "white" : ""}`}
+                    color={`${todo.keterangan === "Done" ? "white" : ""}`}
                     d="M9 12l2.25 2L15 10"></path>
                 </svg>
               </Box>
@@ -66,11 +66,10 @@ const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
                   fontWeight="bold"
                   color="primary"
                   style={{
-                    textDecoration: `${
-                      todo.status_task === "done" ? "line-through" : ""
-                    }`,
+                    textDecoration: `${todo.keterangan === "Done" ? "line-through" : ""
+                      }`,
                   }}>
-                  {todo.judul_task}
+                  {todo.judul}
                 </Text>
                 <Text
                   fontSize="sm"
@@ -80,18 +79,17 @@ const TodoList: React.FC<Props> = ({ todos, todo_status, overdue }: Props) => {
                   textDecoration="initial"
                   overflow="hidden"
                   style={{
-                    textDecoration: `${
-                      todo.status_task === "done" ? "line-through" : ""
-                    }`,
+                    textDecoration: `${todo.keterangan === "Done" ? "line-through" : ""
+                      }`,
                   }}>
-                  {todo.komentar_task}
+                  {todo.komentar}
                 </Text>
                 <Flex align="center">
                   <Text color="red" mr="2" fontSize="sm">
-                    {todo.jam_task}
+                    {todo.jam}
                   </Text>
                   <Text mr={2} fontSize="sm">
-                    - {showFormattedDate(todo.tanggal_task)}
+                    - {showFormattedDate(todo.tanggal)}
                   </Text>
                 </Flex>
               </Box>
