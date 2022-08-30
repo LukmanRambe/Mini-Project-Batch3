@@ -87,11 +87,9 @@ const Login = () => {
 		})
 			.then(res => res.json())
 			.then(data => {
-				var dataRoot = {
-					auth: JSON.stringify(data.data)
-				}
+				let dataToken = JSON.stringify(data.data.token)
 				if (data.code === 200) {
-					localStorage.setItem('root', JSON.stringify(dataRoot))
+					localStorage.setItem('xtoken', JSON.parse(dataToken))
 					setCode(data.code)
 					setTimeout(() => {
 						Router.push('/home')
