@@ -25,7 +25,6 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-// import { IGetMeResponse, ICurentUser } from "../../ts/interface";
 
 const Login = () => {
   // Input User
@@ -98,7 +97,9 @@ const Login = () => {
       if (responseData.code === 200) {
         let dataToken = JSON.stringify(responseData.data.token);
         localStorage.setItem("xtoken", JSON.parse(dataToken));
+        // auth(JSON.parse(dataToken));
         setResponCode(responseData.code);
+        // auth;
         setTimeout(() => {
           setLoading(false);
           Router.push("/home");

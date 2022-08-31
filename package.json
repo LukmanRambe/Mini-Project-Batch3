@@ -18,6 +18,7 @@
     "framer-motion": "^7.2.0",
     "moment": "^2.29.4",
     "next": "12.2.5",
+    "nprogress": "^0.2.0",
     "react": "18.2.0",
     "react-analogue-clock": "^0.3.2",
     "react-dom": "18.2.0",

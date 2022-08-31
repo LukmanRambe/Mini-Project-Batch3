@@ -1,40 +1,110 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;500;600;700&display=swap");
 
 html,
 body {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 a {
-	color: inherit;
-	text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 * {
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-.segitiga2{
-	border-left:solid 10px rgb(255, 255, 255);
-	border-top:solid 20px transparent;
-	border-bottom:solid 20px transparent;
+.segitiga2 {
+  border-left: solid 10px rgb(255, 255, 255);
+  border-top: solid 20px transparent;
+  border-bottom: solid 20px transparent;
 }
-.segitiga{
-	background-color: rgb(255, 255, 255)
+.segitiga {
+  background-color: rgb(255, 255, 255);
 }
-.borderLeft{
-	margin-left: 10px;
-	margin-right: 10px;
-	border-left:solid 1px rgb(255, 255, 255);
+.borderLeft {
+  margin-left: 10px;
+  margin-right: 10px;
+  border-left: solid 1px rgb(255, 255, 255);
 }
+
+/* style nprogress bar */
+#nprogress {
+  pointer-events: none;
+}
+#nprogress .bar {
+  background: #dd6b20;
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+}
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #dd6b20, 0 0 5px #dd6b20;
+  opacity: 1;
+  -webkit-transform: rotate(3deg) translate(0, -4px);
+  -ms-transform: rotate(3deg) translate(0, -4px);
+  transform: rotate(3deg) translate(0, -4px);
+}
+#nprogress .spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: 15px;
+  right: 15px;
+}
+#nprogress .spinner-icon {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-top-color: #29d;
+  border-left-color: #29d;
+  border-radius: 50%;
+  -webkit-animation: nprogress-spinner 400ms linear infinite;
+  animation: nprogress-spinner 400ms linear infinite;
+}
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+.nprogress-custom-parent #nprogress .bar,
+.nprogress-custom-parent #nprogress .spinner {
+  position: absolute;
+}
+@-webkit-keyframes nprogress-spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* akhir style nprogress bar */
+
 @media (prefers-color-scheme: dark) {
-	html {
-		color-scheme: dark;
-	}
-	body {
-		color: white;
-		background: black;
-	}
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
 }

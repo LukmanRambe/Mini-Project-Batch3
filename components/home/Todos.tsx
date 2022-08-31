@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Box, Flex, Heading, Text, Button, useToast } from "@chakra-ui/react";
 import styles from "../../styles/Home.module.css";
@@ -8,19 +8,28 @@ import { useTodo } from "../../hooks/remote/useTodo";
 
 const Todos = ({ Header }: any) => {
   const router = useRouter();
-  const toast = useToast()
+  const toast = useToast();
   const pathName = router.asPath;
-  const { todos, errorTodos } = useTodo()
+  const { todos, errorTodos } = useTodo(
+    pathName === "/home"
+      ? "show_todo"
+      : pathName === "/done"
+      ? "show_done"
+      : pathName === "/overdue"
+      ? "show_overdue"
+      : ""
+  );
   const [visibleAddModal, setVisibleAddModal] = useState(false);
 
   if (errorTodos) {
     toast({
       title: errorTodos.message,
-      status: 'error',
+      status: "error",
       duration: 9000,
       isClosable: true,
-    })
+    });
   }
+
   return (
     <Box
       flex="3"
