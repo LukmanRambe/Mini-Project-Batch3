@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 // Styles
 import {
 	Modal,
@@ -46,7 +44,7 @@ const DeleteModal = ({
 						}}
 						w={175}
 						onClick={() => setIsDeleteModalOpen(prevState => !prevState)}>
-						Batalkan
+						Batal
 					</Button>
 					<Link href='/'>
 						<Button
@@ -59,7 +57,7 @@ const DeleteModal = ({
 								transform: 'scale(0.98)'
 							}}
 							w={175}>
-							Keluar
+							Hapus
 						</Button>
 					</Link>
 				</ModalFooter>

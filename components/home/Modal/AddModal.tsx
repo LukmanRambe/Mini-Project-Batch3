@@ -63,12 +63,10 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
 						}
 					})
 					.then(result => {
-						console.log(result)
-
 						if (result.data.code === 200) {
 							toast({
 								position: 'top',
-								title: 'Gagal',
+								title: 'Berhasil',
 								description: result.data.message,
 								status: 'success',
 								duration: 3000,
@@ -84,7 +82,7 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
 						} else {
 							toast({
 								position: 'top',
-								title: 'Gagal',
+								title: 'Berhasil',
 								description: result.data.message,
 								status: 'success',
 								duration: 3000,
@@ -216,7 +214,7 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
 						}}
 						onClick={onSubmit}
 						w={175}>
-						Tambahkan
+						Tambah
 					</Button>
 				</ModalFooter>
 			</ModalContent>
