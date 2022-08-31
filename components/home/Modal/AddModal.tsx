@@ -68,7 +68,7 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
 						if (result.data.code === 200) {
 							toast({
 								position: 'top',
-								title: 'Gagal',
+								title: 'Berhasil',
 								description: result.data.message,
 								status: 'success',
 								duration: 3000,
@@ -84,7 +84,7 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
 						} else {
 							toast({
 								position: 'top',
-								title: 'Gagal',
+								title: 'Berhasil',
 								description: result.data.message,
 								status: 'success',
 								duration: 3000,
