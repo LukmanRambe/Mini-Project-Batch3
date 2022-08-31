@@ -23,6 +23,7 @@ interface ILogoutModal {
 }
 
 interface IDeleteModal {
+	id_task?:number;
 	isDeleteModalOpen: boolean;
 	setIsDeleteModalOpen: React.Dispatch<SetStateAction<boolean>>;
 	onDeleteModalClose: () => void;
@@ -34,6 +35,7 @@ interface ILayout {
 }
 
 interface Todo {
+	id_task?:number
 	judul: string
 	komentar: string
 	jam: string
