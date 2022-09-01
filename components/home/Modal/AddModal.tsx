@@ -57,12 +57,14 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
     } else {
       if (data) {
         await axios
-          .post("https://nouky.xyz/b3/task/create", data, {
+          .post(`${serviceURL}/task/create`, data, {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("xtoken"),
             },
           })
           .then((result) => {
+            console.log(result);
+
             if (result.data.code === 200) {
               toast({
                 position: "top",
@@ -96,10 +98,10 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
                 tanggal: date.toISOString().substring(0, 10),
               });
             }
-            mutate(`${"https://nouky.xyz/b3"}/task/show_all`);
-            mutate(`${"https://nouky.xyz/b3"}/task/show_todo`);
-            mutate(`${"https://nouky.xyz/b3"}/task/show_overdue`);
-            mutate(`${"https://nouky.xyz/b3"}/task/show_done`);
+            mutate(`${serviceURL}/task/show_all`);
+            mutate(`${serviceURL}/task/count_todo`);
+            mutate(`${serviceURL}/task/count_overdue`);
+            mutate(`${serviceURL}/task/count_done`);
           })
           .catch((err) => {
             if (err.code === "ECONNABORTED") {

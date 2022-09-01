@@ -90,6 +90,9 @@ const EditModal = ({
             mutate(`${serviceURL}/task/show_all`);
             mutate(`${serviceURL}/task/show_done`);
             mutate(`${serviceURL}/task/show_overdue`);
+            mutate(`${serviceURL}/task/count_todo`)
+            mutate(`${serviceURL}/task/count_overdue`)
+            mutate(`${serviceURL}/task/count_done`)
           })
           .catch((err) => {
             if (err.code === "ECONNABORTED") {

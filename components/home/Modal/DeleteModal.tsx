@@ -13,6 +13,7 @@ import {
 
 import { IDeleteModal } from "../../../ts/interface";
 import { mutate } from "swr";
+import { serviceURL } from "../../../utils/config";
 
 const DeleteModal = ({
   id_task,
@@ -51,10 +52,12 @@ const DeleteModal = ({
           });
           setIsDeleteModalOpen(false);
         }
-        mutate(`${"https://nouky.xyz/b3"}/task/show_todo`);
-        mutate(`${"https://nouky.xyz/b3"}/task/show_all`);
-        mutate(`${"https://nouky.xyz/b3"}/task/show_overdue`);
-        mutate(`${"https://nouky.xyz/b3"}/task/show_done`);
+        mutate(`${serviceURL}/task/show_todo`);
+        mutate(`${serviceURL}/task/show_overdue`);
+        mutate(`${serviceURL}/task/show_done`);
+        mutate(`${serviceURL}/task/count_todo`);
+        mutate(`${serviceURL}/task/count_overdue`);
+        mutate(`${serviceURL}/task/count_done`);
       });
     } catch (err) {
       console.log(err);
