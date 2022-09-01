@@ -6,7 +6,6 @@ import { serviceURL } from "../../utils/config";
 import { mutate } from "swr";
 import DeleteModal from "./Modal/DeleteModal";
 import EditModal from "./Modal/EditModal";
-
 // Styles
 import { Box, Flex, Text, Button, useToast } from "@chakra-ui/react";
 
@@ -18,17 +17,16 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
   const toast = useToast();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  // console.log(todos[0].id);
-  // function update Status Task
+  const [task_id, setTaskId] = useState<number | undefined>(0);
+
+  const isDeleteClick = (id: number | undefined) => {
+    setIsDeleteModalOpen((prev) => !prev);
+    setTaskId(id);
+  };
   const updateTaskStatus = async (taskId: number | undefined) => {
     const todoData = todos.filter((todo) => todo.id_task === taskId)[0];
-    // console.log(todoData);
-
     if (todoData) {
-      if (
-        todoData.keterangan === "Progress" ||
-        todoData.keterangan === "Overdue"
-      ) {
+      if (todoData.keterangan === "Progress") {
         await axios
           .post(`https://nouky.xyz/b3/task/finish_task/${taskId}`, null, {
             headers: {
@@ -116,10 +114,6 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
     }
   };
 
-  function filter() {
-    todos.filter;
-  }
-
   return (
     <div>
       {todos?.map((todo, index) => (
@@ -167,7 +161,7 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
                       todo.keterangan === "Done" ? "line-through" : ""
                     }`,
                   }}>
-                  {todo.judul + " " + todo.id}
+                  {todo.judul}
                 </Text>
                 <Text
                   fontSize="sm"
@@ -221,7 +215,7 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
                 bg="transparent"
                 color="primary"
                 _hover={{ background: "gray.100" }}
-                onClick={() => setIsDeleteModalOpen((prevState) => !prevState)}>
+                onClick={() => isDeleteClick(todo.id_task)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -241,15 +235,6 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
               </Button>
             </Flex>
           </Flex>
-
-          <DeleteModal
-            id_task={todo.id_task}
-            isDeleteModalOpen={isDeleteModalOpen}
-            setIsDeleteModalOpen={setIsDeleteModalOpen}
-            onDeleteModalClose={() =>
-              setIsDeleteModalOpen((prevState) => !prevState)
-            }
-          />
           <EditModal
             id_task={todo.id_task}
             id={todo.id}
@@ -258,6 +243,14 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
             setIsEditModalOpen={setIsEditModalOpen}
             onEditModalClose={() =>
               setIsEditModalOpen((prevState) => !prevState)
+            }
+          />
+          <DeleteModal
+            id_task={task_id}
+            isDeleteModalOpen={isDeleteModalOpen}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
+            onDeleteModalClose={() =>
+              setIsDeleteModalOpen((prevState) => !prevState)
             }
           />
         </Box>
