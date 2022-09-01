@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NextLink from "next/link";
 import Router from "next/router";
+import Cookies from "universal-cookie";
 import useSWR from "swr";
 import {
   Button,
@@ -81,6 +82,7 @@ const Login = () => {
   };
 
   const fetcher = async () => {
+    const cookies = new Cookies();
     try {
       setLoading(true);
       const response = await fetch("https://nouky.xyz/b3/login", {
@@ -93,8 +95,12 @@ const Login = () => {
           password: password,
         }),
       });
+
       const responseData = await response.json();
       if (responseData.code === 200) {
+        // CookieAdd untuk logout
+        cookies.set("ci_session", responseData.data.token, { path: "/" });
+        // TokenJWT
         let dataToken = JSON.stringify(responseData.data.token);
         localStorage.setItem("xtoken", JSON.parse(dataToken));
         // auth(JSON.parse(dataToken));
@@ -142,7 +148,8 @@ const Login = () => {
         minH="100vh"
         display="flex"
         justifyContent="center"
-        alignItems="center">
+        alignItems="center"
+      >
         <Container>
           {/* Alert */}
           {error || errorEmail || errorPassword ? (
@@ -155,7 +162,8 @@ const Login = () => {
               transform="translateX(-50%)"
               borderRadius="md"
               color="white"
-              bg="red.400">
+              bg="red.400"
+            >
               <AlertIcon color="white" />
               <Box pr={10} pl={2}>
                 <AlertTitle>Error!</AlertTitle>
@@ -181,7 +189,8 @@ const Login = () => {
               transform="translateX(-50%)"
               borderRadius="md"
               color="white"
-              bg="green.400">
+              bg="green.400"
+            >
               <AlertIcon color="white" />
               <Box pr={10} pl={2}>
                 <AlertTitle>Login Berhasil!</AlertTitle>
@@ -249,7 +258,8 @@ const Login = () => {
                     size="md"
                     borderRightRadius="12px"
                     borderLeftRadius="0"
-                    onClick={handleShow}>
+                    onClick={handleShow}
+                  >
                     {show ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
@@ -270,7 +280,8 @@ const Login = () => {
                 _active={{
                   bg: "#9e2427",
                   transform: "scale(0.98)",
-                }}>
+                }}
+              >
                 {!loading && <Text>Masuk</Text>}
                 {loading && <Spinner></Spinner>}
               </Button>
