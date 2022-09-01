@@ -63,8 +63,6 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
             },
           })
           .then((result) => {
-            console.log(result);
-
             if (result.data.code === 200) {
               toast({
                 position: "top",

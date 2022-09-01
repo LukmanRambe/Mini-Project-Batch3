@@ -20,28 +20,23 @@ import {
 import { IEditModal, Todo } from "../../../ts/interface";
 import { serviceURL } from "../../../utils/config";
 import { mutate } from "swr";
+import { useTodo } from "../../../hooks/remote/useTodo";
 
 const EditModal = ({
   id_task,
-  id,
-  todo,
   isEditModalOpen,
   setIsEditModalOpen,
   onEditModalClose,
 }: IEditModal) => {
-  const date = new Date();
-  let tempHours = `${date.getHours() < 10 ? "0" : ""}${date.getHours()}`;
-  let tempMinutes = `${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
   const toast = useToast();
-
+  const { todos, errorTodos } = useTodo("show_all");
   const [data, setData] = useState<Todo>({
-    judul: todo.judul,
-    komentar: todo.komentar,
-    jam: todo.jam,
-    tanggal: todo.tanggal,
+    judul: "",
+    komentar: "",
+    jam: "",
+    tanggal: "",
   });
   const [isError, setIsError] = useState(false);
-
   const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setData({
       ...data,
@@ -64,7 +59,7 @@ const EditModal = ({
     } else {
       if (data) {
         await axios
-          .post(`https://nouky.xyz/b3/task/update/${Number(id_task)}`, data, {
+          .post(`https://nouky.xyz/b3/task/update/${id_task}`, data, {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("xtoken"),
             },
@@ -135,7 +130,19 @@ const EditModal = ({
     if (data.judul !== "") {
       setIsError(false);
     }
-  }, [data.judul]);
+    if (todos.data) {
+      todos.data.map((todo) => {
+        if (todo.id_task === id_task) {
+          setData({
+            judul: todo.judul,
+            komentar: todo.komentar,
+            jam: todo.jam,
+            tanggal: todo.tanggal,
+          });
+        }
+      });
+    }
+  }, [id_task]);
 
   return (
     <Modal

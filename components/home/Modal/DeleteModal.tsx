@@ -52,6 +52,7 @@ const DeleteModal = ({
           setIsDeleteModalOpen(false);
         }
         mutate(`${"https://nouky.xyz/b3"}/task/show_todo`);
+        mutate(`${"https://nouky.xyz/b3"}/task/show_all`);
         mutate(`${"https://nouky.xyz/b3"}/task/show_overdue`);
         mutate(`${"https://nouky.xyz/b3"}/task/show_done`);
       });
