@@ -28,7 +28,7 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
     if (todoData) {
       if (todoData.keterangan === "Progress") {
         await axios
-          .post(`https://nouky.xyz/b3/task/finish_task/${taskId}`, null, {
+          .post(`${serviceURL}/task/finish_task/${taskId}`, null, {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("xtoken"),
             },
@@ -45,6 +45,9 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
             mutate(`${serviceURL}/task/show_all`);
             mutate(`${serviceURL}/task/show_done`);
             mutate(`${serviceURL}/task/show_overdue`);
+            mutate(`${serviceURL}/task/count_todo`)
+            mutate(`${serviceURL}/task/count_overdue`)
+            mutate(`${serviceURL}/task/count_done`)
           })
           .catch((err) => {
             if (err.code === "ECONNABORTED") {
@@ -70,7 +73,7 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
           });
       } else if (todoData.keterangan === "Done") {
         await axios
-          .post(`https://nouky.xyz/b3/task/undo_done_task/${taskId}`, null, {
+          .post(`${serviceURL}/task/undo_done_task/${taskId}`, null, {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("xtoken"),
             },
@@ -87,6 +90,9 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
             mutate(`${serviceURL}/task/show_all`);
             mutate(`${serviceURL}/task/show_done`);
             mutate(`${serviceURL}/task/show_overdue`);
+            mutate(`${serviceURL}/task/count_todo`)
+            mutate(`${serviceURL}/task/count_overdue`)
+            mutate(`${serviceURL}/task/count_done`)
           })
           .catch((err) => {
             if (err.code === "ECONNABORTED") {
@@ -157,9 +163,8 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
                   fontWeight="bold"
                   color="primary"
                   style={{
-                    textDecoration: `${
-                      todo.keterangan === "Done" ? "line-through" : ""
-                    }`,
+                    textDecoration: `${todo.keterangan === "Done" ? "line-through" : ""
+                      }`,
                   }}>
                   {todo.judul}
                 </Text>
@@ -171,9 +176,8 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
                   textDecoration="initial"
                   overflow="hidden"
                   style={{
-                    textDecoration: `${
-                      todo.keterangan === "Done" ? "line-through" : ""
-                    }`,
+                    textDecoration: `${todo.keterangan === "Done" ? "line-through" : ""
+                      }`,
                   }}>
                   {todo.komentar}
                 </Text>
