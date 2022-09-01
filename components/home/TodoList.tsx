@@ -34,7 +34,7 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
     if (todoData) {
       if (
         todoData.keterangan === "Progress" ||
-        todoData.keterangan === "Done"
+        todoData.keterangan === "Overdue"
       ) {
         await axios
           .post(`${serviceURL}/task/finish_task/${taskId}`, null, {
