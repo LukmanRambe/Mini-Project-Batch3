@@ -55,31 +55,38 @@ const CalendarClock = () => {
       border="1px"
       w="100%"
       h="auto"
-      borderColor="gray.200">
+      borderColor="gray.200"
+    >
       <Grid
         justifyContent="center"
         alignItems="center"
         borderBottom="1px"
         borderColor="gray.200"
         h="5rem"
-        w="100%">
+        w="100%"
+      >
         <Heading as="h2" size="md">
           Jam dan Tanggal Hari ini
         </Heading>
       </Grid>
       <Grid justifyContent="center" alignItems="center" gap={5}>
-        <GridItem>
-          <AnalogueClock {...clockOptions} />
-        </GridItem>
-        <GridItem>
-          <Heading>{timerun}</Heading>
-        </GridItem>
+        <Box display={{ md: "flex" }}>
+          <Center padding={5}>
+            <Box>
+              <AnalogueClock {...clockOptions} />
+            </Box>
+            <Box padding={4}>
+              <Heading>{timerun}</Heading>
+            </Box>
+          </Center>
+        </Box>
       </Grid>
       <Grid
         justifyContent="center"
         alignItems="center"
         gap={5}
-        padding-bottom={5}>
+        padding-bottom={5}
+      >
         <GridItem>
           <Calendar
             size={250}
