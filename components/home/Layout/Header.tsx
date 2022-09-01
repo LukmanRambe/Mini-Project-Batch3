@@ -1,10 +1,54 @@
 // Styles
-import { Container, Flex, HStack, Box, Heading, Text } from "@chakra-ui/react";
+import { Container, Flex, Stack, Box, Heading, Text, useToast } from "@chakra-ui/react";
+import { useCountDoneTodo } from "../../../hooks/remote/useCountDoneTodo";
+import { useCountOverdueTodo } from "../../../hooks/remote/useCountOverdueTodo";
+import { useCountTodo } from "../../../hooks/remote/useCountTodo";
 
 const Header = () => {
+  const { countTodo, errorCountTodo } = useCountTodo()
+  const { countDoneTodo, errorCountDoneTodo } = useCountDoneTodo()
+  const { countOverdueTodo, errorCountOverdueTodo } = useCountOverdueTodo()
+  const toast = useToast()
+
+  if (errorCountTodo) {
+    toast({
+      title: errorCountTodo.message,
+      status: 'error',
+      duration: 9000,
+      isClosable: true
+    })
+  }
+
+  if (errorCountDoneTodo) {
+    toast({
+      title: errorCountDoneTodo.message,
+      status: 'error',
+      duration: 9000,
+      isClosable: true
+    })
+  }
+
+  if (errorCountOverdueTodo) {
+    toast({
+      title: errorCountOverdueTodo.message,
+      status: 'error',
+      duration: 9000,
+      isClosable: true
+    })
+  }
+
   return (
     <Box borderBottom="1px" borderBottomColor="#EFEFEF" p="40px" pb="60px">
-      <Flex justify="space-between">
+      <Flex
+        justify={{
+          base: "center",
+          md: "center",
+          lg: "space-between"
+        }}
+        flexWrap="wrap"
+        gap={4}
+
+      >
         <Flex gap="15px" align="center">
           {/* START: Profile Picture */}
           <Box
@@ -35,7 +79,18 @@ const Header = () => {
         </Flex>
 
         {/* START: Todos Counter */}
-        <HStack direction="row" gap="60px">
+        <Stack
+          direction={['column', 'row', 'row']}
+          gap={{
+            base: 5,
+            lg: 10
+          }}
+          mt={{
+            base: 10,
+            md: 10,
+            lg: 0
+          }}
+        >
           {/* START: Todo Counter */}
           <Container
             display="flex"
@@ -44,10 +99,13 @@ const Header = () => {
             color="#ffffff"
             bgImage="https://mini-project-vocasia.vercel.app/dashboard/todo-stats-bg/todo-counter-bg.svg"
             borderRadius="6px"
-            w="140px"
-            h="87px">
+            w={{
+              base: "120px",
+              lg: "140px"
+            }}
+            h="77px">
             <Heading fontSize="47px" fontWeight="400" mr="8px">
-              1
+              {countTodo?.jumlah_data}
             </Heading>
             <Text fontSize="12px">
               To Do <br /> Task Today
@@ -63,10 +121,13 @@ const Header = () => {
             color="#ffffff"
             bgImage="https://mini-project-vocasia.vercel.app/dashboard/todo-stats-bg/done-counter-bg.svg"
             borderRadius="6px"
-            w="140px"
-            h="87px">
+            w={{
+              base: "120px",
+              lg: "140px"
+            }}
+            h="77px">
             <Heading fontSize="47px" fontWeight="400" mr="8px">
-              10
+              {countDoneTodo?.jumlah_data}
             </Heading>
             <Text fontSize="12px">Done Task</Text>
           </Container>
@@ -80,17 +141,20 @@ const Header = () => {
             color="#ffffff"
             bgImage="https://mini-project-vocasia.vercel.app/dashboard/todo-stats-bg/overdue-counter-bg.svg"
             borderRadius="6px"
-            w="140px"
-            h="87px">
+            w={{
+              base: "120px",
+              lg: "140px"
+            }}
+            h="77px">
             <Heading fontSize="47px" fontWeight="400" mr="8px">
-              8
+              {countOverdueTodo?.jumlah_data}
             </Heading>
             <Text fontSize="12px">
               Overdue <br /> Task
             </Text>
           </Container>
           {/* END: Overdue Todo Counter */}
-        </HStack>
+        </Stack>
         {/* END: Todos Counter */}
       </Flex>
     </Box>
