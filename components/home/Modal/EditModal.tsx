@@ -17,21 +17,28 @@ import {
   FormErrorMessage,
   useToast,
 } from "@chakra-ui/react";
-import { IAddModal, Todo } from "../../../ts/interface";
+import { IEditModal, Todo } from "../../../ts/interface";
 import { serviceURL } from "../../../utils/config";
 import { mutate } from "swr";
 
-const AddModal = ({ isOpen, onClose }: IAddModal) => {
+const EditModal = ({
+  id_task,
+  id,
+  todo,
+  isEditModalOpen,
+  setIsEditModalOpen,
+  onEditModalClose,
+}: IEditModal) => {
   const date = new Date();
   let tempHours = `${date.getHours() < 10 ? "0" : ""}${date.getHours()}`;
   let tempMinutes = `${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
   const toast = useToast();
 
   const [data, setData] = useState<Todo>({
-    judul: "",
-    komentar: "",
-    jam: `${tempHours}:${tempMinutes}`,
-    tanggal: date.toISOString().substring(0, 10),
+    judul: todo.judul,
+    komentar: todo.komentar,
+    jam: todo.jam,
+    tanggal: todo.tanggal,
   });
   const [isError, setIsError] = useState(false);
 
@@ -57,15 +64,13 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
     } else {
       if (data) {
         await axios
-          .post("https://nouky.xyz/b3/task/create", data, {
+          .post(`https://nouky.xyz/b3/task/update/${Number(id_task)}`, data, {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("xtoken"),
             },
           })
           .then((result) => {
-            console.log(result);
-
-            if (result.data.code === 200) {
+            if (result.data.code === 201) {
               toast({
                 position: "top",
                 title: "Berhasil",
@@ -74,13 +79,7 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
                 duration: 3000,
                 isClosable: true,
               });
-              onClose();
-              setData({
-                judul: "",
-                komentar: "",
-                jam: `${tempHours}:${tempMinutes}`,
-                tanggal: date.toISOString().substring(0, 10),
-              });
+              setIsEditModalOpen(false);
             } else {
               toast({
                 position: "top",
@@ -90,18 +89,12 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
                 duration: 3000,
                 isClosable: true,
               });
-              onClose();
-              setData({
-                judul: "",
-                komentar: "",
-                jam: `${tempHours}:${tempMinutes}`,
-                tanggal: date.toISOString().substring(0, 10),
-              });
+              setIsEditModalOpen(false);
             }
-            mutate(`${"https://nouky.xyz/b3"}/task/show_all`);
-            mutate(`${"https://nouky.xyz/b3"}/task/show_todo`);
-            mutate(`${"https://nouky.xyz/b3"}/task/show_overdue`);
-            mutate(`${"https://nouky.xyz/b3"}/task/show_done`);
+            mutate(`${serviceURL}/task/show_todo`);
+            mutate(`${serviceURL}/task/show_all`);
+            mutate(`${serviceURL}/task/show_done`);
+            mutate(`${serviceURL}/task/show_overdue`);
           })
           .catch((err) => {
             if (err.code === "ECONNABORTED") {
@@ -145,7 +138,10 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
   }, [data.judul]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={false}>
+    <Modal
+      isOpen={isEditModalOpen}
+      onClose={onEditModalClose}
+      blockScrollOnMount={false}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader textAlign="center" color="#BA181B">
@@ -227,4 +223,4 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
   );
 };
 
-export default AddModal;
+export default EditModal;

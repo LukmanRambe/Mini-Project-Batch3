@@ -1,61 +1,71 @@
 import React, { SetStateAction } from "react";
 
 interface ICurentUser {
-	email: string;
-	password: string;
+  email: string;
+  password: string;
 }
 
 interface IGetMeResponse {
-	error: number;
-	status: number;
-	messages: ICurentUser;
+  error: number;
+  status: number;
+  messages: ICurentUser;
 }
 
 interface IAddModal {
-	isOpen: boolean
-	onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+interface IEditModal {
+  id_task?: number;
+  id?: number;
+  todo: Todo;
+  isEditModalOpen: boolean;
+  setIsEditModalOpen: React.Dispatch<SetStateAction<boolean>>;
+  onEditModalClose: () => void;
 }
 
 interface ILogoutModal {
-	isLogoutModalOpen: boolean;
-	setIsLogoutModalOpen: React.Dispatch<SetStateAction<boolean>>;
-	onLogoutModalClose: () => void;
+  isLogoutModalOpen: boolean;
+  setIsLogoutModalOpen: React.Dispatch<SetStateAction<boolean>>;
+  onLogoutModalClose: () => void;
 }
 
 interface IDeleteModal {
-	id_task?:number;
-	isDeleteModalOpen: boolean;
-	setIsDeleteModalOpen: React.Dispatch<SetStateAction<boolean>>;
-	onDeleteModalClose: () => void;
+  id_task?: number;
+  isDeleteModalOpen: boolean;
+  setIsDeleteModalOpen: React.Dispatch<SetStateAction<boolean>>;
+  onDeleteModalClose: () => void;
 }
 
 interface ILayout {
-	title: string;
-	children: React.ReactChild;
+  title: string;
+  children: React.ReactChild;
 }
 
 interface Todo {
-	id_task?:number
-	judul: string
-	komentar: string
-	jam: string
-	tanggal: string
-	keterangan?: string
+  id_task?: number;
+  judul: string;
+  komentar: string;
+  jam: string;
+  tanggal: string;
+  keterangan?: string;
 }
 
 interface FormatDate {
-	weekday: string;
-	year: string;
-	month: string;
-	day: string;
+  weekday: string;
+  year: string;
+  month: string;
+  day: string;
 }
 
 export type {
-	IAddModal,
-	ILogoutModal,
-	IDeleteModal,
-	ILayout,
-	Todo,
-	FormatDate,
-	IGetMeResponse,
+  IAddModal,
+  ILogoutModal,
+  IDeleteModal,
+  ILayout,
+  Todo,
+  FormatDate,
+  IGetMeResponse,
+  IEditModal,
 };
