@@ -151,7 +151,7 @@ const EditModal = ({
 			onClose={onEditModalClose}
 			blockScrollOnMount={false}>
 			<ModalOverlay />
-			<ModalContent>
+			<ModalContent mx='15px' alignSelf='center'>
 				<ModalHeader textAlign='center' color='#BA181B'>
 					Task
 				</ModalHeader>

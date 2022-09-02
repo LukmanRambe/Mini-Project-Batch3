@@ -221,7 +221,7 @@ const Sidebar = () => {
 						<Box
 							role='group'
 							w='100%'
-							pl='20px'
+							p='20px'
 							display='flex'
 							_hover={{ cursor: 'pointer' }}>
 							<Button

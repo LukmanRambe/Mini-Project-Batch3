@@ -68,7 +68,7 @@ const DeleteModal = ({
 			onClose={onDeleteModalClose}
 			blockScrollOnMount={false}>
 			<ModalOverlay />
-			<ModalContent alignSelf='center' padding='5px'>
+			<ModalContent mx='15px' alignSelf='center'>
 				<ModalHeader textAlign='center' color='#BA181B'>
 					Hapus Task
 				</ModalHeader>
