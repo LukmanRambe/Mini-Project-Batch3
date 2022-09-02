@@ -86,7 +86,11 @@ const Header = () => {
 
 				{/* START: Todos Counter */}
 				<Stack
-					w='100%'
+					w={{
+						base: '100%',
+						lg: 'inherit',
+						sm: '100%'
+					}}
 					direction={['column', 'row', 'row']}
 					gap={{
 						base: 5,

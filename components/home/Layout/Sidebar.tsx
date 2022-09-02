@@ -57,7 +57,7 @@ const Sidebar = () => {
 				display={{
 					base: 'block',
 					lg: 'none',
-					md: 'none',
+					md: 'block',
 					sm: 'block'
 				}}
 				padding='2px'
