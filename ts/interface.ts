@@ -18,6 +18,7 @@ interface IAddModal {
 
 interface IEditModal {
   id_task?: number;
+  todo: [Todo];
   isEditModalOpen: boolean;
   setIsEditModalOpen: React.Dispatch<SetStateAction<boolean>>;
   onEditModalClose: () => void;

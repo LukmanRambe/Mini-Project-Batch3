@@ -106,10 +106,8 @@ const Login = () => {
         // auth(JSON.parse(dataToken));
         setResponCode(responseData.code);
         // auth;
-        setTimeout(() => {
-          setLoading(false);
-          Router.push("/home");
-        }, 2000);
+        Router.push("/home");
+        setLoading(false);
       } else {
         setLoading(false);
         setError(responseData.messages.error);
@@ -148,8 +146,7 @@ const Login = () => {
         minH="100vh"
         display="flex"
         justifyContent="center"
-        alignItems="center"
-      >
+        alignItems="center">
         <Container>
           {/* Alert */}
           {error || errorEmail || errorPassword ? (
@@ -162,8 +159,7 @@ const Login = () => {
               transform="translateX(-50%)"
               borderRadius="md"
               color="white"
-              bg="red.400"
-            >
+              bg="red.400">
               <AlertIcon color="white" />
               <Box pr={10} pl={2}>
                 <AlertTitle>Error!</AlertTitle>
@@ -189,8 +185,7 @@ const Login = () => {
               transform="translateX(-50%)"
               borderRadius="md"
               color="white"
-              bg="green.400"
-            >
+              bg="green.400">
               <AlertIcon color="white" />
               <Box pr={10} pl={2}>
                 <AlertTitle>Login Berhasil!</AlertTitle>
@@ -258,8 +253,7 @@ const Login = () => {
                     size="md"
                     borderRightRadius="12px"
                     borderLeftRadius="0"
-                    onClick={handleShow}
-                  >
+                    onClick={handleShow}>
                     {show ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
@@ -280,8 +274,7 @@ const Login = () => {
                 _active={{
                   bg: "#9e2427",
                   transform: "scale(0.98)",
-                }}
-              >
+                }}>
                 {!loading && <Text>Masuk</Text>}
                 {loading && <Spinner></Spinner>}
               </Button>

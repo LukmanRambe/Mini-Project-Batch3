@@ -20,16 +20,15 @@ import {
 import { IEditModal, Todo } from "../../../ts/interface";
 import { serviceURL } from "../../../utils/config";
 import { mutate } from "swr";
-import { useTodo } from "../../../hooks/remote/useTodo";
 
 const EditModal = ({
   id_task,
+  todo,
   isEditModalOpen,
   setIsEditModalOpen,
   onEditModalClose,
 }: IEditModal) => {
   const toast = useToast();
-  const { todos, errorTodos } = useTodo("show_all");
   const [data, setData] = useState<Todo>({
     judul: "",
     komentar: "",
@@ -90,9 +89,9 @@ const EditModal = ({
             mutate(`${serviceURL}/task/show_all`);
             mutate(`${serviceURL}/task/show_done`);
             mutate(`${serviceURL}/task/show_overdue`);
-            mutate(`${serviceURL}/task/count_todo`)
-            mutate(`${serviceURL}/task/count_overdue`)
-            mutate(`${serviceURL}/task/count_done`)
+            mutate(`${serviceURL}/task/count_todo`);
+            mutate(`${serviceURL}/task/count_overdue`);
+            mutate(`${serviceURL}/task/count_done`);
           })
           .catch((err) => {
             if (err.code === "ECONNABORTED") {
@@ -133,18 +132,16 @@ const EditModal = ({
     if (data.judul !== "") {
       setIsError(false);
     }
-    if (todos.data) {
-      todos.data.map((todo) => {
-        if (todo.id_task === id_task) {
-          setData({
-            judul: todo.judul,
-            komentar: todo.komentar,
-            jam: todo.jam,
-            tanggal: todo.tanggal,
-          });
-        }
-      });
-    }
+    todo.map((t) => {
+      if (t.id_task === id_task) {
+        setData({
+          judul: t.judul,
+          komentar: t.komentar,
+          jam: t.jam,
+          tanggal: t.tanggal,
+        });
+      }
+    });
   }, [id_task]);
 
   return (

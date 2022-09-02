@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import { Todo } from "../../ts/interface";
@@ -258,6 +258,7 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
             </Flex>
             <EditModal
               id_task={task_id}
+              todo={todos}
               isEditModalOpen={isEditModalOpen}
               setIsEditModalOpen={setIsEditModalOpen}
               onEditModalClose={() =>
