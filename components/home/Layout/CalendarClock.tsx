@@ -110,7 +110,7 @@ const CalendarClock = () => {
 								hideAdjacentDates
 								isDisabled={isDisabled}
 							/>
-							<Heading fontSize='18px' mt='12px'>
+							<Heading fontSize='18px' py='12px' px='18px'>
 								Keterangan
 							</Heading>
 							{days?.length > 0 ? (
@@ -151,7 +151,7 @@ const CalendarClock = () => {
 									})}
 								</div>
 							) : (
-								<Text mt='15px' color='#737373'>
+								<Text color='#737373' px={4} py={4}>
 									Tidak ada hari libur
 								</Text>
 							)}

@@ -98,7 +98,7 @@ const Sidebar = () => {
 					<DrawerCloseButton />
 					{/* START: Logo */}
 					<DrawerHeader>
-						<Box mb='56px' px='30px'>
+						<Box mb='56px' pt='20px' px='30px'>
 							<Image
 								src='https://mini-project-vocasia.vercel.app/image/logo.svg'
 								width='147px'
@@ -430,12 +430,12 @@ const Sidebar = () => {
 					{/* END: Logout Tab */}
 				</Flex>
 				{/* END: Sidebar Tabs */}
-				<LogoutModal
-					isLogoutModalOpen={isLogoutModalOpen}
-					setIsLogoutModalOpen={setIsLogoutModalOpen}
-					onLogoutModalClose={() => setIsLogoutModalOpen(prev => !prev)}
-				/>
 			</Box>
+			<LogoutModal
+				isLogoutModalOpen={isLogoutModalOpen}
+				setIsLogoutModalOpen={setIsLogoutModalOpen}
+				onLogoutModalClose={() => setIsLogoutModalOpen(prev => !prev)}
+			/>
 		</>
 	)
 }

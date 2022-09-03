@@ -42,7 +42,6 @@ const Todos = ({ Header }: any) => {
 				align='center'
 				h='5rem'
 				w='100%'
-				mb='30px'
 				justify='space-between'
 				borderBottom='1px'
 				borderColor='gray.200'>
@@ -58,8 +57,8 @@ const Todos = ({ Header }: any) => {
 			<Flex
 				direction='column'
 				overflowY='auto'
+				py='5px'
 				px='28px'
-				pb='28px'
 				h={{ base: '500px', xl: '780px' }}
 				className={styles.todo}>
 				{/* Todos Done */}

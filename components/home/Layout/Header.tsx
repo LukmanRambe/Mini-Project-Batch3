@@ -61,20 +61,45 @@ const Header = () => {
 					md: 'center',
 					lg: 'space-between'
 				}}
-				flexWrap='wrap'
+				flexWrap={{
+					base: 'wrap',
+					lg: 'nowrap'
+				}}
 				gap={4}>
-				<Flex gap='15px' align='center'>
+				<Flex
+					gap='15px'
+					w='100%'
+					align='center'
+					direction={{
+						base: 'column',
+						lg: 'row'
+					}}
+					textAlign={{
+						base: 'center',
+						lg: 'left'
+					}}>
 					{/* START: Profile Picture */}
 					<Box
 						color='#ffffff'
 						bg='#718096'
 						borderRadius='100%'
-						w='82px'
-						h='82px'
+						w={{
+							base: '78px',
+							lg: '82px'
+						}}
+						h={{
+							base: '78px',
+							lg: '82px'
+						}}
 						display='flex'
 						alignItems='center'
 						justifyContent='center'>
-						<Heading fontSize='48px' fontWeight='700'>
+						<Heading
+							fontSize={{
+								base: '42px',
+								lg: '48px'
+							}}
+							fontWeight='700'>
 							{name && name[0]}
 						</Heading>
 					</Box>
@@ -86,7 +111,7 @@ const Header = () => {
 							{name && name}
 						</Heading>
 						<Text fontSize='18px' color='#737373'>
-							Ayo lebih produktif 💪
+							Ayo Lebih Produktif 💪
 						</Text>
 					</Box>
 					{/* END: Username & Typography */}
@@ -99,7 +124,11 @@ const Header = () => {
 						lg: 'inherit',
 						sm: '100%'
 					}}
-					direction={['column', 'row', 'row']}
+					direction={{
+						base: 'column',
+						md: 'row',
+						lg: 'row'
+					}}
 					gap={{
 						base: 5,
 						lg: 10

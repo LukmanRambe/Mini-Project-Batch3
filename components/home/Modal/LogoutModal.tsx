@@ -56,7 +56,12 @@ const LogoutModal = ({
 			onClose={onLogoutModalClose}
 			blockScrollOnMount={false}>
 			<ModalOverlay />
-			<ModalContent mx='15px' alignSelf='center'>
+			<ModalContent
+				alignSelf='center'
+				maxWidth={{
+					base: '360px',
+					md: '448px'
+				}}>
 				<ModalHeader textAlign='center' color='#BA181B'>
 					Logout
 				</ModalHeader>
