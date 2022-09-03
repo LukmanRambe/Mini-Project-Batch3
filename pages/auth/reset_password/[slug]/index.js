@@ -5,6 +5,15 @@ import { useRouter } from "next/router";
 
 import LayoutAuth from "../../../../components/auth/layout";
 import ResetPassword from "../../../../components/auth/reset_password/index";
+import { authPage } from "../../../middleware/authorizationPage";
+
+export async function getServerSideProps(ctx) {
+  await authPage(ctx);
+  return {
+    props: {},
+  };
+}
+
 const index = () => {
   const router = useRouter();
   const tokenSlug = router.query.slug;

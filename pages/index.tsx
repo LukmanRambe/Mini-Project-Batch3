@@ -1,22 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Router from "next/router";
+import React from "react";
 import Auth from "./auth/index";
+import { authPage } from "./middleware/authorizationPage";
 
+export async function getServerSideProps(ctx: any) {
+  await authPage(ctx);
+  return {
+    props: {},
+  };
+}
 export default function Home() {
-  // have token
-  const [isHaveToken, setIsHaveToken] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsHaveToken(localStorage.getItem("xtoken") !== null);
-    if (isHaveToken) {
-      Router.push("/home");
-    }
-  });
   return (
-    isHaveToken === false && (
-      <div>
-        <Auth></Auth>
-      </div>
-    )
+    <div>
+      <Auth></Auth>
+    </div>
   );
 }
