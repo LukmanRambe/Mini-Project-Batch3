@@ -15,6 +15,16 @@ const CalendarClock = () => {
           return true;
         }
       }
+      if (date.getDate() == 8) {
+        if (date.getMonth() == 9) {
+          return true;
+        }
+      }
+      if (date.getDate() == 25) {
+        if (date.getMonth() == 11) {
+          return true;
+        }
+      }
     },
     []
   );
@@ -117,7 +127,7 @@ const CalendarClock = () => {
                           <Flex>
                             <Center>
                               <Box padding={2} className="segitiga">
-                                <Heading size="md">{numbers[1]}</Heading>
+                                <Heading size="md">{numbers[2]}</Heading>
                               </Box>
                               <Box className="segitiga2"></Box>
                             </Center>
