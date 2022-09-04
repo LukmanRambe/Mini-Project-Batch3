@@ -65,7 +65,7 @@ const Todos = ({ Header }: any) => {
 				{todos?.data?.length != 0 ? (
 					<TodoList todos={todos?.data} />
 				) : (
-					<Text textAlign='center' mb='25px'>
+					<Text textAlign='center' my='25px'>
 						Belum ada Tugas untuk dilakukan
 					</Text>
 				)}
