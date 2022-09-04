@@ -29,11 +29,12 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-const ResetPassword = ({ slug: string }) => {
-  const router = useRouter();
-  // const toast = useToast();
-  // const pathName = router.query;
+interface Props {
+  slug: any;
+}
 
+const ResetPassword: React.FC<Props> = ({ slug }: Props) => {
+  const router = useRouter();
   // stateInput
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
@@ -113,12 +114,6 @@ const ResetPassword = ({ slug: string }) => {
   const handleShowUlangi = () => {
     setShowUlangi(!showUlangi);
   };
-
-  useEffect(() => {
-    // if (email !== "") {
-    //   setIsError(false);
-    // }
-  }, []);
 
   return (
     <GridItem>

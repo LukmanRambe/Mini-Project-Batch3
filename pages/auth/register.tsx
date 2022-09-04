@@ -4,10 +4,17 @@ import { Grid } from "@chakra-ui/react";
 
 import LayoutAuth from "../../components/auth/layout";
 import FormRegister from "../../components/auth/Register";
-import { authPage } from "../middleware/authorizationPage";
+// import authPage from "../middleware/authorizationPage";
 
 export async function getServerSideProps(ctx: any) {
-  await authPage(ctx);
+  const token = ctx.req?.cookies?.ci_session;
+  if (token) {
+    return ctx.res
+      .writeHead(302, {
+        location: "/home",
+      })
+      .end();
+  }
   return {
     props: {},
   };

@@ -5,16 +5,23 @@ import { useRouter } from "next/router";
 
 import LayoutAuth from "../../../../components/auth/layout";
 import ResetPassword from "../../../../components/auth/reset_password/index";
-import { authPage } from "../../../middleware/authorizationPage";
+// import authPage from "../../../middleware/authorizationPage";
 
 export async function getServerSideProps(ctx) {
-  await authPage(ctx);
+  const token = ctx.req?.cookies?.ci_session;
+  if (token) {
+    return ctx.res
+      .writeHead(302, {
+        location: "/home",
+      })
+      .end();
+  }
   return {
     props: {},
   };
 }
 
-const index = () => {
+const Index = () => {
   const router = useRouter();
   const tokenSlug = router.query.slug;
   return (
@@ -31,4 +38,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

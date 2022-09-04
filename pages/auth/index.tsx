@@ -3,6 +3,21 @@ import { Grid } from "@chakra-ui/react";
 
 import LayoutAuth from "../../components/auth/layout";
 import Login from "../../components/auth/Login";
+// import authPage from "../middleware/authorizationPage";
+
+export async function getServerSideProps(ctx: any) {
+  const token = ctx.req?.cookies?.ci_session;
+  if (token) {
+    return ctx.res
+      .writeHead(302, {
+        location: "/home",
+      })
+      .end();
+  }
+  return {
+    props: {},
+  };
+}
 
 const index = () => {
   return (

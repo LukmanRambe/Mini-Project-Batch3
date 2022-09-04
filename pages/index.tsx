@@ -1,9 +1,16 @@
 import React from "react";
 import Auth from "./auth/index";
-import { authPage } from "./middleware/authorizationPage";
+// import authPage from "./middleware/authorizationPage";
 
 export async function getServerSideProps(ctx: any) {
-  await authPage(ctx);
+  const token = ctx.req?.cookies?.ci_session;
+  if (token) {
+    return ctx.res
+      .writeHead(302, {
+        location: "/home",
+      })
+      .end();
+  }
   return {
     props: {},
   };

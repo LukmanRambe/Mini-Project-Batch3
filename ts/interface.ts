@@ -18,7 +18,7 @@ interface IAddModal {
 
 interface IEditModal {
   id_task?: number;
-  todo: [Todo];
+  todo: Todo[];
   isEditModalOpen: boolean;
   setIsEditModalOpen: React.Dispatch<SetStateAction<boolean>>;
   onEditModalClose: () => void;
@@ -43,7 +43,7 @@ interface ILayout {
 }
 
 interface Todo {
-  id_task?: number;
+  id_task?: any;
   judul: string;
   komentar: string;
   jam: string;
