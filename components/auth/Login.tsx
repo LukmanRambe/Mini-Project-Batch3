@@ -98,7 +98,13 @@ const Login = () => {
       const responseData = await response.json();
       if (responseData.code === 200) {
         // CookieAdd untuk logout
-        cookies.set("ci_session", responseData.data.token, { path: "/" });
+        cookies.set("ci_session", responseData.data.token, {
+          path: "/",
+          domain:
+            process.env.NODE_ENV === "development"
+              ? "localhost"
+              : "mini-project-batch3.vercel.app",
+        });
         // TokenJWT
         let dataToken = JSON.stringify(responseData.data.token);
         localStorage.setItem("xtoken", JSON.parse(dataToken));
