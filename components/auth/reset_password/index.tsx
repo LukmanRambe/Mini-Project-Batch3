@@ -61,7 +61,7 @@ const ResetPassword: React.FC<Props> = ({ slug }: Props) => {
 						toast({
 							position: 'top',
 							title: 'Berhasil',
-							description: response.message,
+							description: response.data.message,
 							status: 'success',
 							duration: 3000,
 							isClosable: true
