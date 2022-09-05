@@ -13,8 +13,12 @@ const Index = () => {
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
+		const xtoken = localStorage.getItem('xtoken')
+
 		if (isAuth) {
-			router.push('/home')
+			if (xtoken) {
+				router.push('/home')
+			}
 		} else {
 			setLoading(false)
 		}
