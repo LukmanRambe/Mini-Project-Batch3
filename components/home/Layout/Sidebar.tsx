@@ -73,7 +73,7 @@ const Sidebar = () => {
           background: "#ffffff",
           borderColor: "#BA181B",
         }}
-        zIndex={9999}
+        // zIndex={9999}
         >
         <HamburgerIcon
           w="20px"
