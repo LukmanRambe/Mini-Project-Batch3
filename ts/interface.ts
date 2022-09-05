@@ -58,6 +58,11 @@ interface FormatDate {
   day: string;
 }
 
+interface IZustand {
+  isAuth: boolean;
+  login: () => void;
+}
+
 export type {
   IAddModal,
   ILogoutModal,
@@ -67,4 +72,5 @@ export type {
   FormatDate,
   IGetMeResponse,
   IEditModal,
+  IZustand
 };

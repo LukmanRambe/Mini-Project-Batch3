@@ -15,7 +15,7 @@ import Book from "../../assets/book.png";
 
 const LayoutAuth = () => {
   return (
-    <GridItem display={{ sm: "none", md: "block" }}>
+    <GridItem display={{ base: "none", md: "block" }}>
       <VStack
         bg="#fff"
         w="full"

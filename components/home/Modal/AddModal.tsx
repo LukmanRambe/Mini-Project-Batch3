@@ -149,7 +149,17 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={false}>
 			<ModalOverlay />
-			<ModalContent mx='15px' alignSelf='center'>
+			<ModalContent 
+				height={{
+					base: 400,
+					md: 'auto',
+				}}
+				overflow={{
+					base: 'auto',
+					md: 'hidden'
+				}}
+				
+			mx='15px' alignSelf='center'>
 				<ModalHeader textAlign='center' color='#BA181B'>
 					Task
 				</ModalHeader>

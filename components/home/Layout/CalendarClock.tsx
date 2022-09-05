@@ -91,26 +91,38 @@ const CalendarClock = () => {
       </Grid>
       <Grid justifyContent="center" alignItems="center" gap={5}>
         <Box display={{ md: "flex" }}>
-          <Center padding={5}>
+          <Center padding={5}
+            display={{base: 'block', md: 'flex'}}
+          >
             <Box>
               <AnalogueClock {...clockOptions} />
             </Box>
             <Box padding={4}>
-              <Heading>{timerun}</Heading>
+              <Heading textAlign='center'>{timerun}</Heading>
             </Box>
           </Center>
         </Box>
       </Grid>
       <Grid justifyContent="center" alignItems="center" padding-bottom={5}>
-        <Box display={{ md: "flex" }}>
-          <Center>
-            <Box>
+        <Box display={{ md: "flex" }} flexWrap="wrap">
+          <Center textAlign={{base: 'center', md: 'left'}}>
+            <Box maxW='100%'>
+              <Box display={{base: 'block', md: 'none'}}>
+              <Calendar
+                size={220}
+                fontSize={18}
+                hideAdjacentDates
+                isDisabled={isDisabled}
+              />
+              </Box>
+              <Box display={{base: 'none', md: 'block'}}>
               <Calendar
                 size={350}
                 fontSize={18}
                 hideAdjacentDates
                 isDisabled={isDisabled}
               />
+              </Box>
               <Heading fontSize="18px" py="12px" px="18px">
                 Keterangan
               </Heading>

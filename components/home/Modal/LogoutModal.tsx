@@ -65,7 +65,7 @@ const LogoutModal = ({
       <ModalContent
         alignSelf="center"
         maxWidth={{
-          base: "360px",
+          base: "290px",
           md: "448px",
         }}>
         <ModalHeader textAlign="center" color="#BA181B">

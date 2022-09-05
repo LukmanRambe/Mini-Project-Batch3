@@ -72,7 +72,9 @@ const Sidebar = () => {
         _active={{
           background: "#ffffff",
           borderColor: "#BA181B",
-        }}>
+        }}
+        zIndex={9999}
+        >
         <HamburgerIcon
           w="20px"
           h="20px"
