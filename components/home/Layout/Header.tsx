@@ -99,14 +99,17 @@ const Header = () => {
           <Box>
             <SkeletonText
               noOfLines={1}
-              w="80px"
+              w={isLoaded ? "full" : "80px"}
               mb={isLoaded ? 0 : 2}
               isLoaded={isLoaded}>
               <Heading fontSize="24px" mb={0} fontWeight="700">
                 {name && name}
               </Heading>
             </SkeletonText>
-            <SkeletonText noOfLines={2} w="120px" isLoaded={isLoaded}>
+            <SkeletonText
+              noOfLines={2}
+              w={isLoaded ? "full" : "120px"}
+              isLoaded={isLoaded}>
               <Text fontSize="18px" color="#737373">
                 Ayo Lebih Produktif 💪
               </Text>
@@ -141,7 +144,19 @@ const Header = () => {
             borderRadius={{
               base: "12px",
               lg: "6px",
-            }}>
+            }}
+            w={{
+              base: "100%",
+              lg: "140px",
+              sm: "100%",
+            }}
+            h={{
+              base: "100%",
+              lg: "77px",
+              sm: "90px",
+            }}
+            bgSize="cover"
+            bgRepeat="no-repeat">
             <Container
               display="flex"
               alignItems="center"
@@ -180,7 +195,19 @@ const Header = () => {
             borderRadius={{
               base: "12px",
               lg: "6px",
-            }}>
+            }}
+            w={{
+              base: "100%",
+              lg: "140px",
+              sm: "100%",
+            }}
+            h={{
+              base: "100%",
+              lg: "77px",
+              sm: "90px",
+            }}
+            bgSize="cover"
+            bgRepeat="no-repeat">
             <Container
               display="flex"
               alignItems="center"
@@ -217,7 +244,19 @@ const Header = () => {
             borderRadius={{
               base: "12px",
               lg: "6px",
-            }}>
+            }}
+            w={{
+              base: "100%",
+              lg: "140px",
+              sm: "100%",
+            }}
+            h={{
+              base: "100%",
+              lg: "77px",
+              sm: "90px",
+            }}
+            bgSize="cover"
+            bgRepeat="no-repeat">
             <Container
               display="flex"
               alignItems="center"
