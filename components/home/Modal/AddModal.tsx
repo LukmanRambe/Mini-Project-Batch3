@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
 	Modal,
@@ -147,19 +147,19 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
 	}, [data.judul])
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={false}>
+		<Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={true}>
 			<ModalOverlay />
-			<ModalContent 
+			<ModalContent
 				height={{
 					base: 400,
-					md: 'auto',
+					md: 'auto'
 				}}
 				overflow={{
 					base: 'auto',
 					md: 'hidden'
 				}}
-				
-			mx='15px' alignSelf='center'>
+				mx='15px'
+				alignSelf='center'>
 				<ModalHeader textAlign='center' color='#BA181B'>
 					Task
 				</ModalHeader>
@@ -231,7 +231,7 @@ const AddModal = ({ isOpen, onClose }: IAddModal) => {
 						}}
 						onClick={onSubmit}
 						w={175}>
-						Tambahkan
+						Tambahkan Task
 					</Button>
 				</ModalFooter>
 			</ModalContent>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 
@@ -57,7 +57,6 @@ const ResetPassword: React.FC<Props> = ({ slug }: Props) => {
 						userPassword
 					)
 					if (response.status === 200) {
-						// console.log(response.request.responseURL);
 						toast({
 							position: 'top',
 							title: 'Berhasil',

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useStore } from '../../../store/useStore'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Sidebar from './Sidebar'
 import Header from './Header'
@@ -10,12 +10,13 @@ import { ILayout } from '../../../ts/interface'
 import { Box } from '@chakra-ui/react'
 
 const Layout = ({ children, title }: ILayout): any => {
+	const router = useRouter()
 	const { isAuth } = useStore()
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
 		if (isAuth === false) {
-			Router.push('/')
+			router.push('/')
 		} else {
 			setLoading(false)
 		}

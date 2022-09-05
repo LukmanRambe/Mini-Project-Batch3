@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import NextLink from 'next/link'
 import Router from 'next/router'
 import Cookies from 'universal-cookie'

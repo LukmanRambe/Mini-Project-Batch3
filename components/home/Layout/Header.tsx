@@ -1,20 +1,11 @@
 // Styles
-import {
-	Container,
-	Flex,
-	Stack,
-	Box,
-	Heading,
-	Text,
-	useToast
-} from '@chakra-ui/react'
+import { Container, Flex, Box, Heading, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useCountDoneTodo } from '../../../hooks/remote/useCountDoneTodo'
 import { useCountOverdueTodo } from '../../../hooks/remote/useCountOverdueTodo'
 import { useCountTodo } from '../../../hooks/remote/useCountTodo'
 
 const Header = () => {
-	const toast = useToast()
 	const { countTodo } = useCountTodo()
 	const { countDoneTodo } = useCountDoneTodo()
 	const { countOverdueTodo } = useCountOverdueTodo()
@@ -196,7 +187,7 @@ const Header = () => {
 						bgSize='cover'
 						bgRepeat='no-repeat'>
 						<Heading fontSize='47px' fontWeight='400' mr='8px'>
-							{countOverdueTodo?.jumlah_data || 0} 
+							{countOverdueTodo?.jumlah_data || 0}
 						</Heading>
 						<Text fontSize='12px'>
 							Overdue <br /> Task
