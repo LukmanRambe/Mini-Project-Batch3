@@ -97,7 +97,6 @@ const Login = () => {
         }
       )
       .then((result) => {
-        console.log(result.data.data);
         if (result.data.code === 200) {
           toast({
             position: "top",
@@ -131,7 +130,6 @@ const Login = () => {
       })
       .catch((err) => {
         setLoading(true);
-        console.log(err);
         if (err.code === "ECONNABORTED") {
           toast({
             position: "top",

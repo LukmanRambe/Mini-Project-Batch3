@@ -44,9 +44,6 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
             },
           })
           .then((result) => {
-            console.log(result);
-            console.log(taskId);
-
             toast({
               position: "top",
               title: "Berhasil",
@@ -111,8 +108,6 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
             mutate(`${serviceURL}/task/count_done`);
           })
           .catch((err) => {
-            console.log(err);
-            console.log(taskId);
             if (err.code === "ECONNABORTED") {
               toast({
                 position: "top",
