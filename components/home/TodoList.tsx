@@ -149,11 +149,8 @@ const TodoList: React.FC<Props> = ({ todos }: Props) => {
       {todos
         ?.sort((todoA: Todo, todoB: Todo) => todoB?.id_task - todoA?.id_task)
         .map((todo, index) => (
-          <Skeleton mt={isLoaded ? 0 : 2} isLoaded={isLoaded}>
-            <Box
-              boxShadow="rgb(173 173 173 / 10%) 0px 6px 0px 0px"
-              key={index}
-              py="3px">
+          <Skeleton mt={isLoaded ? 0 : 2} isLoaded={isLoaded} key={index}>
+            <Box boxShadow="rgb(173 173 173 / 10%) 0px 6px 0px 0px" py="3px">
               <Flex
                 direction={{ base: "column", sm: "row" }}
                 justify="space-between"
