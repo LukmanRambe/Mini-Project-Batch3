@@ -15,37 +15,10 @@ import { useCountTodo } from '../../../hooks/remote/useCountTodo'
 
 const Header = () => {
 	const toast = useToast()
-	const { countTodo, errorCountTodo } = useCountTodo()
-	const { countDoneTodo, errorCountDoneTodo } = useCountDoneTodo()
-	const { countOverdueTodo, errorCountOverdueTodo } = useCountOverdueTodo()
+	const { countTodo } = useCountTodo()
+	const { countDoneTodo } = useCountDoneTodo()
+	const { countOverdueTodo } = useCountOverdueTodo()
 	const [name, setName] = useState<string | null>('')
-
-	if (errorCountTodo) {
-		toast({
-			title: errorCountTodo.message,
-			status: 'error',
-			duration: 9000,
-			isClosable: true
-		})
-	}
-
-	if (errorCountDoneTodo) {
-		toast({
-			title: errorCountDoneTodo.message,
-			status: 'error',
-			duration: 9000,
-			isClosable: true
-		})
-	}
-
-	if (errorCountOverdueTodo) {
-		toast({
-			title: errorCountOverdueTodo.message,
-			status: 'error',
-			duration: 9000,
-			isClosable: true
-		})
-	}
 
 	useEffect(() => {
 		const username = localStorage.getItem('name')
@@ -161,7 +134,7 @@ const Header = () => {
 						bgSize='cover'
 						bgRepeat='no-repeat'>
 						<Heading fontSize='47px' fontWeight='400' mr='8px'>
-							{countTodo?.jumlah_data}
+							{countTodo?.jumlah_data || 0}
 						</Heading>
 						<Text fontSize='12px'>
 							To Do <br /> Task Today
@@ -193,7 +166,7 @@ const Header = () => {
 						bgSize='cover'
 						bgRepeat='no-repeat'>
 						<Heading fontSize='47px' fontWeight='400' mr='8px'>
-							{countDoneTodo?.jumlah_data}
+							{countDoneTodo?.jumlah_data || 0}
 						</Heading>
 						<Text fontSize='12px'>Done Task</Text>
 					</Container>
@@ -223,7 +196,7 @@ const Header = () => {
 						bgSize='cover'
 						bgRepeat='no-repeat'>
 						<Heading fontSize='47px' fontWeight='400' mr='8px'>
-							{countOverdueTodo?.jumlah_data}
+							{countOverdueTodo?.jumlah_data || 0} 
 						</Heading>
 						<Text fontSize='12px'>
 							Overdue <br /> Task
