@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useStore } from '../../store/useStore'
+import { useStore } from '../../../../store/useStore'
 import Head from 'next/head'
 import { Grid } from '@chakra-ui/layout'
 import LayoutAuth from '../../../../components/auth/layout'
