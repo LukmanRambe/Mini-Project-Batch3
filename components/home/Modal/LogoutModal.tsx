@@ -14,6 +14,7 @@ import {
 import { ILogoutModal } from "../../../ts/interface";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
+import { useStore } from "../../../store/useStore";
 
 const LogoutModal = ({
   isLogoutModalOpen,
@@ -22,6 +23,7 @@ const LogoutModal = ({
 }: ILogoutModal) => {
   const router = useRouter();
   const toast = useToast();
+  const { logout } = useStore();
   const cookies = new Cookies();
   const handleLogout = async () => {
     setIsLogoutModalOpen(false);
@@ -50,6 +52,7 @@ const LogoutModal = ({
       });
       localStorage.clear();
       setTimeout(() => {
+        logout();
         router.push("/");
       }, 1000);
     } catch (err) {
@@ -65,7 +68,7 @@ const LogoutModal = ({
       <ModalContent
         alignSelf="center"
         maxWidth={{
-          base: "360px",
+          base: "290px",
           md: "448px",
         }}>
         <ModalHeader textAlign="center" color="#BA181B">

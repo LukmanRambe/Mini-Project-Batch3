@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import NextLink from "next/link";
 import Router from "next/router";
 import Cookies from "universal-cookie";
+import axios from "axios";
 import {
   Button,
   GridItem,
@@ -23,21 +24,17 @@ import {
   AlertDescription,
   CloseButton,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useStore } from "../../store/useStore";
 
 const Login = () => {
+  const { login } = useStore();
+  const toast = useToast();
   // Input User
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // Error
-  const [error, setError] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
-  const [errorEmail, setErrorEmail] = useState("");
-
-  // code status Success login
-  const [responseCode, setResponCode] = useState<number | null>(null);
 
   const [show, setShow] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
@@ -53,83 +50,111 @@ const Login = () => {
   function validatePassword(): boolean {
     var validate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     if (validate.test(password) === false) {
-      setErrorPassword(
-        "Password minimal 8 Character, Satu Huruf Besar dan Angka"
-      );
+      toast({
+        position: "top",
+        title: "Gagal",
+        description: "Password minimal 8 Character, Satu Huruf Besar dan Angka",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
       return false;
     } else {
-      setErrorPassword("");
       return true;
     }
   }
 
   function validateEmail(): boolean {
     if (email === "") {
-      setErrorEmail("Email Harus Diisi");
+      toast({
+        position: "top",
+        title: "Gagal",
+        description: "Email Harus Diisi",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
       return false;
     } else {
-      setErrorEmail("");
       return true;
     }
   }
-  // close Alert
-  const onClose = () => {
-    setError("");
-    setErrorPassword("");
-    setErrorEmail("");
-    setResponCode(null);
-  };
 
   const fetcher = async () => {
     const cookies = new Cookies();
-    try {
-      setLoading(true);
-      const response = await fetch("https://nouky.xyz/b3/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify({
+    setLoading(true);
+    await axios
+      .post(
+        "https://nouky.xyz/b3/login",
+        {
           email: email,
           password: password,
-        }),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result.data.data);
+        if (result.data.code === 200) {
+          toast({
+            position: "top",
+            title: "Berhasil",
+            description: result.data.message,
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+          // CookieAdd untuk logout
+          cookies.set("ci_session", result.data.data.token, {
+            path: "/",
+            domain:
+              process.env.NODE_ENV === "development"
+                ? "localhost"
+                : "mini-project-batch3.vercel.app",
+          });
+          // TokenJWT
+          let dataToken = JSON.stringify(result.data.data.token);
+          localStorage.setItem("xtoken", JSON.parse(dataToken));
+          // nameUser
+          let Name = JSON.stringify(result.data.data.name);
+          localStorage.setItem("name", JSON.parse(Name));
+          // auth;
+          setTimeout(() => {
+            login();
+            Router.push("/home");
+          }, 1000);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(true);
+        console.log(err);
+        if (err.code === "ECONNABORTED") {
+          toast({
+            position: "top",
+            title: "Gagal",
+            description:
+              "Tidak dapat menjangkau Server, periksa koneksi Anda dan ulangi beberapa saat lagi.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+          setLoading(false);
+        } else if (err.response) {
+          toast({
+            position: "top",
+            title: "Gagal",
+            description: err.response.data.messages.error,
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+          setLoading(false);
+        }
       });
-
-      const responseData = await response.json();
-      if (responseData.code === 200) {
-        // CookieAdd untuk logout
-        cookies.set("ci_session", responseData.data.token, {
-          path: "/",
-          domain:
-            process.env.NODE_ENV === "development"
-              ? "localhost"
-              : "mini-project-batch3.vercel.app",
-        });
-        // TokenJWT
-        let dataToken = JSON.stringify(responseData.data.token);
-        localStorage.setItem("xtoken", JSON.parse(dataToken));
-        // nameUser
-        let Name = JSON.stringify(responseData.data.name);
-        localStorage.setItem("name", JSON.parse(Name));
-        // auth(JSON.parse(dataToken));
-        setResponCode(responseData.code);
-        // auth;
-        Router.push("/home");
-        setLoading(false);
-      } else {
-        setLoading(false);
-        setError(responseData.messages.error);
-      }
-    } catch (err) {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        setError("Server Terjadi Masalah");
-      }, 500);
-      setTimeout(() => {
-        setError("");
-      }, 2000);
-    }
   };
 
   const handleMasuk = (event: React.FormEvent) => {
@@ -156,62 +181,6 @@ const Login = () => {
         justifyContent="center"
         alignItems="center">
         <Container>
-          {/* Alert */}
-          {error || errorEmail || errorPassword ? (
-            <Alert
-              status="error"
-              position="absolute"
-              w="auto"
-              top="2"
-              left="50%"
-              transform="translateX(-50%)"
-              borderRadius="md"
-              color="white"
-              bg="red.400">
-              <AlertIcon color="white" />
-              <Box pr={10} pl={2}>
-                <AlertTitle>Error!</AlertTitle>
-                <AlertDescription>
-                  {error || errorEmail || errorPassword}
-                </AlertDescription>
-              </Box>
-              <CloseButton
-                alignSelf="flex-start"
-                position="absolute"
-                right={2}
-                top={2}
-                onClick={onClose}
-              />
-            </Alert>
-          ) : responseCode === 200 ? (
-            <Alert
-              status="success"
-              position="absolute"
-              w="auto"
-              top="2"
-              left="50%"
-              transform="translateX(-50%)"
-              borderRadius="md"
-              color="white"
-              bg="green.400">
-              <AlertIcon color="white" />
-              <Box pr={10} pl={2}>
-                <AlertTitle>Login Berhasil!</AlertTitle>
-                <AlertDescription>
-                  Kamu Akan Dialihkan Ke Dashboard
-                </AlertDescription>
-              </Box>
-              <CloseButton
-                alignSelf="flex-start"
-                position="absolute"
-                right={2}
-                top={2}
-                onClick={onClose}
-              />
-            </Alert>
-          ) : (
-            ""
-          )}
           <Box textAlign="center" mb={7}>
             <Heading as="h1" size="md" mt={2}>
               Masuk

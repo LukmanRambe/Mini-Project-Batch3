@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Box, Flex, Heading, Text, Button, useToast } from '@chakra-ui/react'
 import styles from '../../styles/Home.module.css'

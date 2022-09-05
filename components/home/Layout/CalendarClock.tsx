@@ -1,5 +1,13 @@
 // Styles
-import { Box, Center, Flex, Grid, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Grid,
+  Heading,
+  Text,
+  Skeleton,
+} from "@chakra-ui/react";
 import { Calendar } from "@natscale/react-calendar";
 import "@natscale/react-calendar/dist/main.css";
 import moment from "moment";
@@ -7,6 +15,8 @@ import { useEffect, useState, useCallback } from "react";
 import AnalogueClock from "react-analogue-clock";
 
 const CalendarClock = () => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
   const isDisabled: any = useCallback(
     (date: { getDate: () => number; getMonth: () => number }) => {
       // disable wednesdays and any date that is divisible by 5
@@ -45,6 +55,9 @@ const CalendarClock = () => {
 
   useEffect(() => {
     fetchData();
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 500);
   }, []);
 
   const time = new Date();
@@ -91,26 +104,38 @@ const CalendarClock = () => {
       </Grid>
       <Grid justifyContent="center" alignItems="center" gap={5}>
         <Box display={{ md: "flex" }}>
-          <Center padding={5}>
+          <Center padding={5} display={{ base: "block", md: "flex" }}>
             <Box>
               <AnalogueClock {...clockOptions} />
             </Box>
             <Box padding={4}>
-              <Heading>{timerun}</Heading>
+              <Heading textAlign="center">{timerun}</Heading>
             </Box>
           </Center>
         </Box>
       </Grid>
       <Grid justifyContent="center" alignItems="center" padding-bottom={5}>
-        <Box display={{ md: "flex" }}>
-          <Center>
-            <Box>
-              <Calendar
-                size={350}
-                fontSize={18}
-                hideAdjacentDates
-                isDisabled={isDisabled}
-              />
+        <Box display={{ md: "flex" }} flexWrap="wrap">
+          <Center textAlign={{ base: "center", md: "left" }}>
+            <Box maxW="100%">
+              <Box display={{ base: "block", md: "none" }}>
+                <Calendar
+                  size={220}
+                  fontSize={18}
+                  hideAdjacentDates
+                  isDisabled={isDisabled}
+                />
+              </Box>
+              <Box display={{ base: "none", md: "block" }}>
+                <Skeleton isLoaded={isLoaded}>
+                  <Calendar
+                    size={350}
+                    fontSize={18}
+                    hideAdjacentDates
+                    isDisabled={isDisabled}
+                  />
+                </Skeleton>
+              </Box>
               <Heading fontSize="18px" py="12px" px="18px">
                 Keterangan
               </Heading>

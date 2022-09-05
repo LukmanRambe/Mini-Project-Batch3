@@ -1,51 +1,38 @@
-import Head from "next/head";
-import { Grid } from "@chakra-ui/react";
-
-import LayoutAuth from "../../components/auth/layout";
-import Login from "../../components/auth/Login";
-// import authPage from "../middleware/authorizationPage";
-import { useState, useEffect } from "react";
-import Router from "next/router";
-
-// export async function getServerSideProps(ctx: any) {
-//   const token = ctx.req?.cookies?.ci_session;
-//   if (token) {
-//     return ctx.res
-//       .writeHead(302, {
-//         location: "/home",
-//       })
-//       .end();
-//   }
-//   return {
-//     props: {},
-//   };
-// }
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { useStore } from '../../store/useStore'
+import Head from 'next/head'
+import { Grid } from '@chakra-ui/react'
+import LayoutAuth from '../../components/auth/layout'
+import Login from '../../components/auth/Login'
 
 const Index = (): any => {
-  const [isHaveToken, setIsHaveToken] = useState(false);
+	const router = useRouter()
+	const { isAuth } = useStore()
+	const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    setIsHaveToken(localStorage.getItem("xtoken") !== null);
+	useEffect(() => {
+		if (isAuth) {
+			router.push('/home')
+		} else {
+			setLoading(false)
+		}
+	}, [isAuth])
 
-    if (isHaveToken) {
-      Router.push("/home");
-    }
-  }, [isHaveToken]);
+	return loading ? (
+		<div></div>
+	) : (
+		<>
+			<Head>
+				<title>Masuk</title>
+			</Head>
 
-  return (
-    isHaveToken === false && (
-      <>
-        <Head>
-          <title>Masuk</title>
-        </Head>
+			<Grid bg='#F8F8FB' templateColumns={{ base: '1fr', md: '1fr 1fr' }}>
+				<LayoutAuth />
+				<Login />
+			</Grid>
+		</>
+	)
+}
 
-        <Grid bg="#F8F8FB" templateColumns={{ base: "1fr", md: "1fr 1fr" }}>
-          <LayoutAuth />
-          <Login />
-        </Grid>
-      </>
-    )
-  );
-};
-
-export default Index;
+export default Index
